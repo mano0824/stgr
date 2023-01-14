@@ -1,15 +1,15 @@
 <?php
 return [
     'Sgsp_Pay_Check_Res' => [
-        'MachineNo' => '',
-        'CallNo' => '',
+        'MachineNo' => '11',
+        'CallNo' => '22',
         'ListDetail' => [
             (int) 0 => [
             'TrkNo' => 'TrkNo01',
             'TrkName' => 'Tachi',
             'TrkKana' => '',
             'Kingaku' => 1000,
-            'Status' => '',
+            'Status' => '0',
             'Message' => 'Gift a voucher　Tachi ',
             ],
             (int) 1 => [
@@ -17,7 +17,7 @@ return [
             'TrkName' => 'Jana',
             'TrkKana' => '',
             'Kingaku' => 2000,
-            'Status' => '',
+            'Status' => '0',
             'Message' => '',
             ],
             (int) 2 => [
@@ -25,7 +25,7 @@ return [
             'TrkName' => 'Ichi',
             'TrkKana' => '',
               'Kingaku' => 3000,
-            'Status' => '',
+            'Status' => '0',
             'Message' => 'Gift a voucher　Ichi',
             ],
             (int) 3 => [
@@ -36,11 +36,12 @@ return [
             'Status' => '',
             'Message' => '',
             ]
+            
         ]
     ],
     'Sgsp_Pay_Check_Detail_Res' => [
-        'MachineNo' => '',
-        'CallNo' => '',
+        'MachineNo' => '11',
+        'CallNo' => '22',
         'TrkName' => 'Tachi',
         'TrkNo'=> 'TrkNo1',
         'Detail'=> [
@@ -119,19 +120,19 @@ return [
         ]
     ],
     'Sgsp_Pay_Res' => [
-        'MachineNo' => '',
-        'CallNo' => '',
-        'HostBillNo' => '',
-        'Status' => '',
+        'MachineNo' => '11',
+        'CallNo' => '22',
+        'HostBillNo' => '778',
+        'Status' => '0',
     ],
     'Sgsp_Pay_Reset_Res' => [
-        'MachineNo' => 1,
-        'CallNo' => '',
-        'Status' => 0,
+        'MachineNo' => '11',
+        'CallNo' => '22',
+        'Status' => '0',
     ],
     'Sgsp_Pay_Receipt_Res' => [
         'MachineNo' => 11,
-        'CallNo' => '',
+        'CallNo' => '22',
         'ReceiptKbn' => '',
         'ReceiptNo' => 789,
         'TrkNo' => '',
@@ -236,25 +237,25 @@ return [
         ]
     ],
     'Sgsp_Pay_Purchase_Res' => [
-        'MachineNo' => '',
-        'CallNo' => '',
-        'Status' => '',
+        'MachineNo' => '11',
+        'CallNo' => '22',
+        'Status' => '0',
     ],
     'Sgsp_Pay_Purchase_Decision_Res' => [
-        'MachineNo' => '',
-        'CallNo' => '',
-        'Status' => '',
+        'MachineNo' => '11',
+        'CallNo' => '22',
+        'Status' => '0',
     ],
     'Sgsp_PointPay_Check_Res' => [
-        'MachineNo' => '',
-        'CallNo' => '',
+        'MachineNo' => '11',
+        'CallNo' => '22',
         'ListDetail' => [
             (int) 0 => [
             'TrkNo' => 'TrkNo01',
             'TrkName' => 'Tachi',
             'TrkKana' => '',
             'Kingaku' => 1000,
-            'Status' => '',
+            'Status' => '0',
             'Message' => 'Gift a voucher Tachi',
             ],
             (int) 1 => [
@@ -262,7 +263,7 @@ return [
             'TrkName' => 'Jana',
             'TrkKana' => '',
             'Kingaku' => 2000,
-            'Status' => '',
+            'Status' => '0',
             'Message' => '',
             ],
             (int) 2 => [
@@ -270,19 +271,12 @@ return [
             'TrkName' => 'Ichi',
             'TrkKana' => '',
             'Kingaku' => 3000,
-            'Status' => '',
+            'Status' => '0',
             'Message' => 'Gift a voucher Ichi',
-            ],
-            (int) 3 => [
-             'TrkNo' => 'TrkNo04',
-            'TrkName' => 'Neco',
-            'TrkKana' => '',
-            'Kingaku' => 4000,
-            'Status' => '',
-            'Message' => '',
             ]
+            
         ],
-        'BillingAmount' => '',
+        'BillingAmount' => '7528',
         'UsePoints' => 1000,
         'UsePointsKind' => '',
         'PointBalance' => 9000,
