@@ -133,6 +133,15 @@ return [
                 'Suryo'=> '1',
                 'Kingaku'=> 5000,
                 'Status'=> '0'
+            ],
+            (int) 10 => [
+                'DispSortNo'=> '9',
+                'ShohinName'=> 'Sake',
+                'ZeiKbn'=> '0',
+                'Tanka'=> '10',
+                'Suryo'=> '1',
+                'Kingaku'=> 5000,
+                'Status'=> '0'
             ]
         ]
     ],
