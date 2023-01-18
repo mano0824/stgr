@@ -16,17 +16,15 @@ class SgspPayReceipt extends AppForm {
 
     protected function _buildSchema(Schema $schema) {
         return $schema
-                    // ->addField('RoomAccountID',     ['type' => 'string'])
-                    // ->addField('RoomNo',            ['type' => 'integer'])
+                    ->addField('MachineNo',     ['type' => 'integer'])
+                    ->addField('CallNo',        ['type' => 'integer'])
                     ;
     }
     
     // バリデーション後に実行する処理
     protected function _execute(array $data= array()) {
         try {
-            $requestHeader = $this->getRequestHeader();
-
-            $params = $requestHeader + array(
+            $params = array(
                 // 'CheckIn_RequestList' => array(
                 //     'RoomAccountID' => $data['RoomAccountID'],
                 //     'RoomNo' => $data['RoomNo']

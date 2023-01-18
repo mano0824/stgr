@@ -19,22 +19,6 @@ class AppForm extends Form {
     }
 
     /**
-     * 共通のヘッダー情報を取得する
-     */
-    protected function getRequestHeader() {
-		$data = array(
-			'RequestHeader' => array(
-				'ClientId' => $this->config['ClientId'],
-				'GroupCode' => $this->config['GroupCode'],
-				'CompanyCode' => $this->config['CompanyCode'],
-				'HotelCode' => $this->config['HotelCode'],
-				'Key' => $this->config['Key']
-            )
-		);
-        return $data;
-    }
-
-    /**
      * APIをコールする
      *
      * @param array $data 送信するデータ
