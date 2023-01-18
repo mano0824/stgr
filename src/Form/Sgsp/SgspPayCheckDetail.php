@@ -25,10 +25,9 @@ class SgspPayCheckDetail extends AppForm {
     protected function _execute(array $data= array()) {
         try {
             $params = array(
-                // 'CheckIn_RequestList' => array(
-                //     'RoomAccountID' => $data['RoomAccountID'],
-                //     'RoomNo' => $data['RoomNo']
-                // )
+                'MachineNo' => $data['MachineNo'],
+                'CallNo' => $data['CallNo'],
+                'TrkNoList' => $data['TrkNoList']
             );
 
             if($this->config['Debug']){

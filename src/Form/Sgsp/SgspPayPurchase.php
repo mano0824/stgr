@@ -25,10 +25,16 @@ class SgspPayPurchase extends AppForm {
     protected function _execute(array $data= array()) {
         try {
             $params = array(
-                // 'CheckIn_RequestList' => array(
-                //     'RoomAccountID' => $data['RoomAccountID'],
-                //     'RoomNo' => $data['RoomNo']
-                // )
+                'MachineNo' => $data['MachineNo'],
+                'CallNo' => $data['CallNo'],
+                'TrkNo' => $data['TrkNo'],
+                'SecurityCode' => $data['SecurityCode'],
+                'Application' => $data['Application'],
+                'ExpirationDate' => $data['ExpirationDate'],
+                'Balance' => $data['Balance'],
+                'InitialMoney' => $data['InitialMoney'],
+                'HistoryNumber' => $data['HistoryNumber'],
+                'ListDetail' => $data['ListDetail']
             );
 
             if($this->config['Debug']){

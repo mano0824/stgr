@@ -25,10 +25,10 @@ class SgspPayPurchaseDecision extends AppForm {
     protected function _execute(array $data= array()) {
         try {
             $params = array(
-                // 'CheckIn_RequestList' => array(
-                //     'RoomAccountID' => $data['RoomAccountID'],
-                //     'RoomNo' => $data['RoomNo']
-                // )
+                'MachineNo' => $data['MachineNo'],
+                'CallNo' => $data['CallNo'],
+                'TrkNo' => $data['TrkNo'],
+                'HistoryFlag' => $data['HistoryFlag']
             );
 
             if($this->config['Debug']){
