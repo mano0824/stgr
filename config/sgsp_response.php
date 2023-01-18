@@ -1,42 +1,49 @@
 <?php
 return [
     'Sgsp_Pay_Check_Res' => [
-        'MachineNo' => '',
-        'CallNo' => '',
+        'Pms_Api' => 'PayCheck',
+        'MachineNo' => 1,
+        'CallNo' => 2,
         'ListDetail' => [
-            (int) 0 => [
-            'TrkNo' => 'TrkNo01',
-            'TrkName' => 'Tachi',
-            'TrkKana' => '',
+          0 => [
+            'TrkNo' => 1,
+            'TrkName' => '徳川　家康',
+            'TrkKana' => 'トクガワ　イエヤス',
             'Kingaku' => 1000,
-            'Status' => '',
+            'Status' => 0,
             'Message' => '',
-            ],
-            (int) 1 => [
-             'TrkNo' => 'TrkNo02',
-            'TrkName' => 'Jana',
-            'TrkKana' => '',
-            'Kingaku' => 2000,
-            'Status' => '',
+            'PayDoneFlag' => 0,
+          ],
+          1 => [
+            'TrkNo' => 2,
+            'TrkName' => '宮本　武蔵',
+            'TrkKana' => 'ミヤモト　ムサシ',
+            'Kingaku' => 100,
+            'Status' => 0,
             'Message' => '',
-            ],
-            (int) 2 => [
-             'TrkNo' => 'TrkNo03',
-            'TrkName' => 'Ichi',
-            'TrkKana' => '',
-              'Kingaku' => 3000,
-            'Status' => '',
-            'Message' => 'Gift a voucher',
-            ],
-            (int) 3 => [
-             'TrkNo' => 'TrkNo04',
-            'TrkName' => 'Neco',
-            'TrkKana' => '',
-              'Kingaku' => 4000,
-            'Status' => '',
-            'Message' => 'Gift a coca',
-            ]
-        ]
+            'PayDoneFlag' => 0,
+          ],
+          2 => [
+            'TrkNo' => 3,
+            'TrkName' => '聖徳　太子',
+            'TrkKana' => 'ショウトク　タイシ',
+            'Kingaku' => 100,
+            'Status' => 0,
+            'Message' => '',
+            'PayDoneFlag' => 0,
+          ],
+          3 => [
+            'TrkNo' => 4,
+            'TrkName' => '田中　太郎',
+            'TrkKana' => 'タナカ　タロウ',
+            'Kingaku' => 51400,
+            'Status' => 0,
+            'Message' => '',
+            'PayDoneFlag' => 0,
+          ],
+        ],
+        'Status' => 0,
+        'Message' => '000000',
     ],
     'Sgsp_Pay_Check_Detail_Res' => [
         'MachineNo' => '',
