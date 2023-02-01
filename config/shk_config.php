@@ -8,5 +8,10 @@ return [
             'Debug' => true,                        // デバッグログ出力モード
             'TimeOut' => 60,                        // 接続タイムアウト秒数
         ],
+        'API' => [
+            'Debug' => true,                       // デバッグログ出力モード
+            'AllowExternalAccess' => true,         // 接続許可
+            'DashboardURL' => 'http://127.0.0.1:88/dashboard-G/',          //Dashboard接続先URL
+        ],
     ],
 ];

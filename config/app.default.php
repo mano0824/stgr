@@ -231,7 +231,7 @@ return [
             //'port' => 'non_standard_port_number',
             'username' => 'SystemGear',
             'password' => 'SystemGear',
-            'database' => 'adc_db',
+            'database' => 'adc5300g_db',
             'encoding' => 'utf8',
             'timezone' => 'Asia/Tokyo',
             'flags' => [],

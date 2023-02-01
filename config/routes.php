@@ -55,6 +55,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/sgsp/payPurchaseDecision', ['controller' => 'Sgsp', 'action' => 'payPurchaseDecision']);
     $routes->connect('/sgsp/pointPayCheck', ['controller' => 'Sgsp', 'action' => 'pointPayCheck']);
 
+    // Api
+    $routes->connect('/api/test', ['controller' => 'Api', 'action' => 'test']);
+    $routes->connect('/api/getOperationStatus', ['controller' => 'Api', 'action' => 'getOperationStatus']);
+
     /**
      * Connect catchall routes for all controllers.
      *
