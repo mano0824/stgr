@@ -24,6 +24,22 @@ class SgspPay extends AppForm {
     // バリデーション後に実行する処理
     protected function _execute(array $data= array()) {
         try {
+            if (!isset($data['CMemNo']) || strlen($data['CMemNo']) <= 0)
+            {
+                $data['CMemNo'] = " ";
+            }
+            if (!isset($data['CMemName']) || strlen($data['CMemName']) <= 0)
+            {
+                $data['CMemName'] = " ";
+            }
+            if (!isset($data['CreditName']) || strlen($data['CreditName']) <= 0)
+            {
+                $data['CreditName'] = " ";
+            }
+            if (!isset($data['PeriodYmd']) || strlen($data['PeriodYmd']) <= 0)
+            {
+                $data['PeriodYmd'] = " ";
+            }
             $params = array(
                 'MachineNo' => $data['MachineNo'],
                 'CallNo' => $data['CallNo'],
