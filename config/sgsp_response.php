@@ -504,7 +504,7 @@ return [
         'UsePoints' => 0,
         'UsePointsKind' => 0,
         'PointBalance' => 100000,
-        'UsePointsLimitUpper' => 50000,
+        'UsePointsLimitUpper' => 20,
         'UsePointsLimitLower' => 10,
         'UsePointsUnit' => 10,
         'UsePointsMessage' => '1ポイントにつき1円の割引が可能です。',
