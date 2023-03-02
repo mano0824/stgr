@@ -19,22 +19,6 @@ class AppForm extends Form {
     }
 
     /**
-     * 共通のヘッダー情報を取得する
-     */
-    protected function getRequestHeader() {
-		$data = array(
-			'RequestHeader' => array(
-				'ClientId' => $this->config['ClientId'],
-				'GroupCode' => $this->config['GroupCode'],
-				'CompanyCode' => $this->config['CompanyCode'],
-				'HotelCode' => $this->config['HotelCode'],
-				'Key' => $this->config['Key']
-            )
-		);
-        return $data;
-    }
-
-    /**
      * APIをコールする
      *
      * @param array $data 送信するデータ
@@ -64,15 +48,15 @@ class AppForm extends Form {
         $info       = curl_getinfo($ch);
         $errorNo    = curl_errno($ch);
 
-        $response = array('Pms_Api'=>$type);
+        $response = array('Sgsp_Api'=>$type);
         if ($errorNo !== CURLE_OK) {
             if( $errorNo == CURLE_OPERATION_TIMEDOUT) {
                 throw new Exception(__('{"result_code":"12002",
-                                         "Pms_Api":"'.$type.'",
+                                         "Sgsp_Api":"'.$type.'",
                                          "message":"timeout"}'));
             } else {
                 throw new Exception(__('{"result_code":"12001",
-                                         "Pms_Api":"'.$type.'",
+                                         "Sgsp_Api":"'.$type.'",
                                          "message":"不明なエラー: errorNo=' . $errorNo . '"}'));
             }
             return $response;
@@ -80,7 +64,7 @@ class AppForm extends Form {
 
         if ($info['http_code'] !== 200) {
             throw new Exception(__('{"result_code":"12101",
-                                     "Pms_Api":"'.$type.'",
+                                     "Sgsp_Api":"'.$type.'",
                                      "message":" http_code:' . $info['http_code'] . '"}'));
         }
 
@@ -90,7 +74,7 @@ class AppForm extends Form {
         } else {
             Log::write("debug",$contents);
             throw new Exception(__('{"result_code":"12101",
-                                     "Pms_Api":"'.$type.'",
+                                     "Sgsp_Api":"'.$type.'",
                                      "message":"' . json_last_error_msg() . '"}'));
         }
 

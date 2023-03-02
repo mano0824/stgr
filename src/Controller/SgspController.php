@@ -54,8 +54,13 @@ class SgspController extends AppController
       $retSgspPayCheck = $this->postJson($pSgspPayCheck, self::ERROR);
       $responseSgspPayCheck = isset($retSgspPayCheck['response']) ? $retSgspPayCheck['response'] : null;
 
-      if ($responseSgspPayCheck) {
-        $result['PayCheckResult'] = $retSgspPayCheck['response'];
+      if (self::ERROR == $retSgspPayCheck['success']) {
+        $this->log("payCheck CONNECTION ERROR ","debug");
+        throw new Exception('上位通信アプリ接続エラー');
+      } else {
+        if ($responseSgspPayCheck) {
+          $result['PayCheckResult'] = $retSgspPayCheck['response'];
+        }
       }
 
       $this->log($result,"debug");
@@ -93,8 +98,13 @@ class SgspController extends AppController
       $retSgspPayCheckDetail = $this->postJson($pSgspPayCheckDetail, self::ERROR);
       $responseSgspPayCheckDetail = isset($retSgspPayCheckDetail['response']) ? $retSgspPayCheckDetail['response'] : null;
 
-      if ($responseSgspPayCheckDetail) {
-        $result['PayCheckDetailResult'] = $retSgspPayCheckDetail['response'];
+      if (self::ERROR == $retSgspPayCheckDetail['success']) {
+        $this->log("payCheckDetail CONNECTION ERROR ","debug");
+        throw new Exception('上位通信アプリ接続エラー');
+      } else {
+        if ($responseSgspPayCheckDetail) {
+          $result['PayCheckDetailResult'] = $retSgspPayCheckDetail['response'];
+        }
       }
 
       $this->log($result,"debug");
@@ -132,8 +142,13 @@ class SgspController extends AppController
       $retSgspPay = $this->postJson($pSgspPay, self::ERROR);
       $responseSgspPay = isset($retSgspPay['response']) ? $retSgspPay['response'] : null;
 
-      if ($responseSgspPay) {
-        $result['PayResult'] = $retSgspPay['response'];
+      if (self::ERROR == $retSgspPay['success']) {
+        $this->log("pay CONNECTION ERROR ","debug");
+        throw new Exception('上位通信アプリ接続エラー');
+      } else {
+        if ($responseSgspPay) {
+          $result['PayResult'] = $retSgspPay['response'];
+        }
       }
 
       $this->log($result,"debug");
@@ -171,8 +186,13 @@ class SgspController extends AppController
       $retSgspPayReset = $this->postJson($pSgspPayReset, self::ERROR);
       $responseSgspPayReset = isset($retSgspPayReset['response']) ? $retSgspPayReset['response'] : null;
 
-      if ($responseSgspPayReset) {
-        $result['PayResetResult'] = $retSgspPayReset['response'];
+      if (self::ERROR == $retSgspPayReset['success']) {
+        $this->log("payReset CONNECTION ERROR ","debug");
+        throw new Exception('上位通信アプリ接続エラー');
+      } else {
+        if ($responseSgspPayReset) {
+          $result['PayResetResult'] = $retSgspPayReset['response'];
+        }
       }
 
       $this->log($result,"debug");
@@ -210,8 +230,13 @@ class SgspController extends AppController
       $retSgspPayReceipt = $this->postJson($pSgspPayReceipt, self::ERROR);
       $responseSgspPayReceipt = isset($retSgspPayReceipt['response']) ? $retSgspPayReceipt['response'] : null;
 
-      if ($responseSgspPayReceipt) {
-        $result['PayReceiptResult'] = $retSgspPayReceipt['response'];
+      if (self::ERROR == $retSgspPayReceipt['success']) {
+        $this->log("payReceipt CONNECTION ERROR ","debug");
+        throw new Exception('上位通信アプリ接続エラー');
+      } else {
+        if ($responseSgspPayReceipt) {
+          $result['PayReceiptResult'] = $retSgspPayReceipt['response'];
+        }
       }
 
       $this->log($result,"debug");
@@ -249,8 +274,13 @@ class SgspController extends AppController
       $retSgspPayPurchase = $this->postJson($pSgspPayPurchase, self::ERROR);
       $responseSgspPayPurchase = isset($retSgspPayPurchase['response']) ? $retSgspPayPurchase['response'] : null;
 
-      if ($responseSgspPayPurchase) {
-        $result['PayPurchaseResult'] = $retSgspPayPurchase['response'];
+      if (self::ERROR == $retSgspPayPurchase['success']) {
+        $this->log("payPurchase CONNECTION ERROR ","debug");
+        throw new Exception('上位通信アプリ接続エラー');
+      } else {
+        if ($responseSgspPayPurchase) {
+          $result['PayPurchaseResult'] = $retSgspPayPurchase['response'];
+        }
       }
 
       $this->log($result,"debug");
@@ -288,8 +318,13 @@ class SgspController extends AppController
       $retSgspPayPurchaseDecision = $this->postJson($pSgspPayPurchaseDecision, self::ERROR);
       $responseSgspPayPurchaseDecision = isset($retSgspPayPurchaseDecision['response']) ? $retSgspPayPurchaseDecision['response'] : null;
 
-      if ($responseSgspPayPurchaseDecision) {
-        $result['PayPurchaseDecisionResult'] = $retSgspPayPurchaseDecision['response'];
+      if (self::ERROR == $retSgspPayPurchaseDecision['success']) {
+        $this->log("payPurchaseDecision CONNECTION ERROR ","debug");
+        throw new Exception('上位通信アプリ接続エラー');
+      } else {
+        if ($responseSgspPayPurchaseDecision) {
+          $result['PayPurchaseDecisionResult'] = $retSgspPayPurchaseDecision['response'];
+        }
       }
 
       $this->log($result,"debug");
@@ -327,8 +362,13 @@ class SgspController extends AppController
       $retSgspPointPayCheck = $this->postJson($pSgspPointPayCheck, self::ERROR);
       $responseSgspPointPayCheck = isset($retSgspPointPayCheck['response']) ? $retSgspPointPayCheck['response'] : null;
 
-      if ($responseSgspPointPayCheck) {
-        $result['PointPayCheckResult'] = $retSgspPointPayCheck['response'];
+      if (self::ERROR == $retSgspPointPayCheck['success']) {
+        $this->log("pointPayCheck CONNECTION ERROR ","debug");
+        throw new Exception('上位通信アプリ接続エラー');
+      } else {
+        if ($responseSgspPointPayCheck) {
+          $result['PointPayCheckResult'] = $retSgspPointPayCheck['response'];
+        }
       }
 
       $this->log($result,"debug");
@@ -348,7 +388,7 @@ class SgspController extends AppController
       // $this->log(" postJson START","debug");
 
       $result = array();
-      $result['success'] = '0';
+      $result['success'] = $errCode;
       $result['result_code'] = '';
       $result['message'] = '';
 
@@ -360,10 +400,12 @@ class SgspController extends AppController
               // $this->log("  Pms APi execute END","debug");
 
               $result['response'] = $response;
+
+              $result['success'] = self::SUCCESS;
             }
         } catch (Exception $e) {
             $result = json_decode($e->getMessage(), true);
-            $result['success'] = '0';
+            $result['success'] = $errCode;
         }
 
         // $this->log(" postJson END","debug");

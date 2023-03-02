@@ -16,21 +16,21 @@ class SgspPointPayCheck extends AppForm {
 
     protected function _buildSchema(Schema $schema) {
         return $schema
-                    // ->addField('RoomAccountID',     ['type' => 'string'])
-                    // ->addField('RoomNo',            ['type' => 'integer'])
+                    ->addField('MachineNo',     ['type' => 'integer'])
+                    ->addField('CallNo',        ['type' => 'integer'])
                     ;
     }
     
     // バリデーション後に実行する処理
     protected function _execute(array $data= array()) {
         try {
-            $requestHeader = $this->getRequestHeader();
-
-            $params = $requestHeader + array(
-                // 'CheckIn_RequestList' => array(
-                //     'RoomAccountID' => $data['RoomAccountID'],
-                //     'RoomNo' => $data['RoomNo']
-                // )
+            $params = array(
+                'MachineNo' => $data['MachineNo'],
+                'CallNo' => $data['CallNo'],
+                'TrkNoList' => $data['TrkNoList'],
+                'UsePointTrkNo' => $data['UsePointTrkNo'],
+                'UsePoints' => $data['UsePoints'],
+                'UsePointsKind' => $data['UsePointsKind']
             );
 
             if($this->config['Debug']){
