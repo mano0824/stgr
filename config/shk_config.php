@@ -18,6 +18,11 @@ return [
                 'PayPurchaseDecision' => 'sgsppaypurchasedecision',
                 'PointPayCheck' => 'sgsppointpaycheck'
             ]
-        ]
-    ]
+        ],
+        'API' => [
+            'Debug' => true,                       // デバッグログ出力モード
+            'AllowExternalAccess' => true,         // 接続許可
+            'DashboardURL' => 'http://127.0.0.1:88/dashboard-G/',          //Dashboard接続先URL
+        ],
+    ],
 ];
