@@ -77,7 +77,7 @@ use Cake\Utility\Security;
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
-    Configure::load('shk_config', 'default', false);
+    Configure::load('stgr_config', 'default', false);
     Configure::load('sgsp_response', 'default', false);
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
