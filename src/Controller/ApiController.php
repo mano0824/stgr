@@ -41,8 +41,8 @@ class ApiController extends AppController
     public function test()
     {
         // initialize
-        $this->log("======================================================", "debug");
-        $this->log("■ test START (ApiController)", "debug");
+        $this->log("======================================================", "debug", "api");
+        $this->log("■ test START (ApiController)", "debug", "api");
 
         $result = array();
 
@@ -56,7 +56,7 @@ class ApiController extends AppController
 
         $this->set('result', $result);
         $this->render('response');
-        $this->log("■ test END (ApiController)", "debug");
+        $this->log("■ test END (ApiController)", "debug", "api");
     }
 
     /**
@@ -68,8 +68,8 @@ class ApiController extends AppController
     {
         // initialize
         if ($this->config['Debug']) {
-            $this->log("======================================================", "debug");
-            $this->log("■ getOperationStatus START (ApiController)", "debug");
+            $this->log("======================================================", "debug", "api");
+            $this->log("■ getOperationStatus START (ApiController)", "debug", "api");
         }
 
         $result = array();
@@ -78,9 +78,9 @@ class ApiController extends AppController
             if ($this->request->is('post')) {
                 $data = $this->request->data;
                 if ($this->config['Debug']) {
-                    $this->log(" -- post params (begin)", "debug");
-                    $this->log($data, "debug");
-                    $this->log(" -- post params (finish)", "debug");
+                    $this->log(" -- post params (begin)", "debug", "api");
+                    $this->log($data, "debug", "api");
+                    $this->log(" -- post params (finish)", "debug", "api");
                 }
                 $operationData = array();
                 $operationData['DetailUrl'] = $this->config['DashboardURL'];
@@ -94,13 +94,13 @@ class ApiController extends AppController
                 $this->loadModel('TOperationStatus');
                 $objModel = $this->TOperationStatus->find('all')->first();
                 if ($this->config['Debug']) {
-                    $this->log(" -- get db (begin)", "debug");
-                    $this->log($objModel, "debug");
-                    $this->log(" -- get db (finish)", "debug");
+                    $this->log(" -- get db (begin)", "debug", "api");
+                    $this->log($objModel, "debug", "api");
+                    $this->log(" -- get db (finish)", "debug", "api");
                 }
                 if ($objModel) {
                     if ($this->config['Debug']) {
-                        $this->log(" -- TOperationStatus START", "debug");
+                        $this->log(" -- TOperationStatus START", "debug", "api");
                     }
                     $objDb = new SQLiteFunction();
                     $operationData['Status'] = $objModel['Status'];
@@ -113,7 +113,7 @@ class ApiController extends AppController
                         $operationData['OptionKind'] = $errors['Option1Kind'];
                     }
                     if ($this->config['Debug']) {
-                        $this->log(" -- TOperationStatus END", "debug");
+                        $this->log(" -- TOperationStatus END", "debug", "api");
                     }
                 }
                 $result['success'] = self::SUCCESS;
@@ -128,8 +128,8 @@ class ApiController extends AppController
         $this->set('result', $result);
         $this->render('response');
         if ($this->config['Debug']) {
-            $this->log($result, "debug");
-            $this->log("■ getOperationStatus END (ApiController)", "debug");
+            $this->log($result, "debug", "api");
+            $this->log("■ getOperationStatus END (ApiController)", "debug", "api");
         }
     }
 

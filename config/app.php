@@ -306,6 +306,7 @@ return [
             'path' => LOGS,
             'file' => 'debug_' . date("ymd"),
             'levels' => ['notice', 'info', 'debug'],
+            'scopes' => false, //ADD ADC5300G-10 Log api 2023/04/04 SGVN-Tien
             'url' => env('LOG_DEBUG_URL', null),
         ],
         'error' => [
@@ -314,8 +315,18 @@ return [
             'path' => LOGS,
             'file' => 'error_' . date("ymd"),
             'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
+            'scopes' => false, //ADD ADC5300G-10 Log api 2023/04/04 SGVN-Tien
             'url' => env('LOG_ERROR_URL', null),
         ],
+        //ADD ADC5300G-10 Log api 2023/04/04 SGVN-Tien Start
+        'debug_api' => [
+            'className' => 'App\FileLogCr',
+            'path' => LOGS,
+            'file' => 'debug_api_'. date("ymd"),
+            'scopes' => ['api'],
+            'levels' => [],
+        ],
+        //ADD ADC5300G-10 Log api 2023/04/04 SGVN-Tien End
     ],
 
     /**
