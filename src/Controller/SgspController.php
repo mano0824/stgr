@@ -368,6 +368,24 @@ class SgspController extends AppController
       } else {
         if ($responseSgspPointPayCheck) {
           $result['PointPayCheckResult'] = $retSgspPointPayCheck['response'];
+          if (isset($result['PointPayCheckResult'])
+            && isset($result['PointPayCheckResult']['BillingAmount'])
+            && $result['PointPayCheckResult']['Status'] == 0) {
+              // 請求金額がマイナスの場合
+              if ($result['PointPayCheckResult']['BillingAmount'] < 0) {
+                $result['PointPayCheckResult']['Message'] = '900002';
+              } 
+              // 利用可能ポイントの上限が精算金額を超える場合
+              else if (isset($result['PointPayCheckResult']['UsePointsLimitUpper'])
+                    && $result['PointPayCheckResult']['UsePointsLimitUpper'] > $result['PointPayCheckResult']['BillingAmount']) {
+                $result['PointPayCheckResult']['Message'] = '900001';
+              }
+              // 請求金額が精算機の精算金額の上限
+              else if (isset($this->request->data['PaymentLimit'])
+                        && $result['PointPayCheckResult']['BillingAmount'] > $this->request->data['PaymentLimit']) {
+                $result['PointPayCheckResult']['Message'] = '900003';
+              }
+          }
         }
       }
 
