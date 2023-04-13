@@ -369,7 +369,6 @@ class SgspController extends AppController
         if ($responseSgspPointPayCheck) {
           $result['PointPayCheckResult'] = $retSgspPointPayCheck['response'];
           if (isset($result['PointPayCheckResult'])
-            && isset($result['PointPayCheckResult']['UsePointsLimitUpper'])
             && isset($result['PointPayCheckResult']['BillingAmount'])
             && $result['PointPayCheckResult']['Status'] == 0) {
               // 請求金額がマイナスの場合
@@ -377,7 +376,8 @@ class SgspController extends AppController
                 $result['PointPayCheckResult']['Message'] = '900002';
               } 
               // 利用可能ポイントの上限が精算金額を超える場合
-              else if ($result['PointPayCheckResult']['UsePointsLimitUpper'] > $result['PointPayCheckResult']['BillingAmount']) {
+              else if (isset($result['PointPayCheckResult']['UsePointsLimitUpper'])
+                    && $result['PointPayCheckResult']['UsePointsLimitUpper'] > $result['PointPayCheckResult']['BillingAmount']) {
                 $result['PointPayCheckResult']['Message'] = '900001';
               }
               // 請求金額が精算機の精算金額の上限
