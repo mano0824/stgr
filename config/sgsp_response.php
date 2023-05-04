@@ -42,7 +42,6 @@ return [
             'PayDoneFlag' => 0,
           ],
         ],
-        'Status' => 0,
         'Message' => '000000',
     ],
     'Sgsp_Pay_Check_Detail_Res' => [
@@ -91,7 +90,6 @@ return [
             'Status' => 0,
           ],
         ],
-        'Status' => 0,
         'Message' => '000000',
     ],
     'Sgsp_Pay_Res' => [
@@ -99,14 +97,12 @@ return [
         'MachineNo' => 1,
         'CallNo' => 2,
         'HostBillNo' => 6628,
-        'Status' => 0,
         'Message' => '000000',
     ],
     'Sgsp_Pay_Reset_Res' => [
         'Sgsp_Api' => 'PayReset',
         'MachineNo' => 1,
         'CallNo' => 2,
-        'Status' => 0,
         'Message' => '000000',
     ],
     'Sgsp_Pay_Receipt_Res' => [
@@ -441,21 +437,18 @@ return [
             'Comment8' => 'DetailKbn= N Comment8 of TrkNo= 4, RowNo = 2',
           ],
         ],
-        'Status' => 0,
         'Message' => '000000',
     ],
     'Sgsp_Pay_Purchase_Res' => [
         'Sgsp_Api' => 'PayPurchase',
         'MachineNo' => 1,
         'CallNo' => 2,
-        'Status' => 0,
         'Message' => '000000',
     ],
     'Sgsp_Pay_Purchase_Decision_Res' => [
         'Sgsp_Api' => 'PayPurchaseDecision',
         'MachineNo' => 1,
         'CallNo' => 2,
-        'Status' => 0,
         'Message' => '000000',
     ],
     'Sgsp_PointPay_Check_Res' => [
@@ -508,7 +501,6 @@ return [
         'UsePointsLimitLower' => 10,
         'UsePointsUnit' => 10,
         'UsePointsMessage' => '1ポイントにつき1円の割引が可能です。',
-        'Status' => 0,
         'Message' => '000000',
     ],
 ];
