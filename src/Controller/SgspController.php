@@ -382,6 +382,7 @@ class SgspController extends AppController
               }
               // 請求金額が精算機の精算金額の上限
               else if (isset($this->request->data['PaymentLimit'])
+                        && $this->request->data['PaymentLimit'] > 0
                         && $result['PointPayCheckResult']['BillingAmount'] > $this->request->data['PaymentLimit']) {
                 $result['PointPayCheckResult']['Message'] = '900003';
               }
