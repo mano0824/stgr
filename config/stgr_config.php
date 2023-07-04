@@ -4,7 +4,7 @@
 return [
     'STGR' => [
         'GOLF' => [
-            'FixedResponse' => true,                // 固定応答モード
+            'FixedResponse' => false,                // 固定応答モード
             'Debug' => true,                        // デバッグログ出力モード
             'TimeOut' => 60,                        // 接続タイムアウト秒数
             'ServiceURL' => 'http://localhost:688/api/',            // 上位通信アプリ接続先URL
@@ -22,7 +22,7 @@ return [
         'API' => [
             'Debug' => true,                       // デバッグログ出力モード
             'AllowExternalAccess' => true,         // 接続許可
-            'DashboardURL' => 'http://127.0.0.1:88/dashboard-G/',          //Dashboard接続先URL
+            'DashboardURL' => 'http://ADC-5300G:88/dashboard-G/',          //Dashboard接続先URL
         ],
     ],
 ];
