@@ -6,7 +6,7 @@ return [
         'GOLF' => [
             'FixedResponse' => false,                // 固定応答モード
             'Debug' => true,                        // デバッグログ出力モード
-            'TimeOut' => 60,                        // 接続タイムアウト秒数
+            'TimeOut' => 180,                        // 接続タイムアウト秒数
             'ServiceURL' => 'http://localhost:688/api/',            // 上位通信アプリ接続先URL
             'urlParams' => [
                 'PayCheck' => 'sgsppaycheck',
