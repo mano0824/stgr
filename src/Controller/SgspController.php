@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
-use App\Controller\AppController;
+use App\Controller\SgcComController;
 use App\Form\Sgsp\SgspPayCheck;
 use App\Form\Sgsp\SgspPayCheckDetail;
 use App\Form\Sgsp\SgspPay;
@@ -17,7 +17,7 @@ use Cake\Network\Exception\SocketException;
 /**
  * Sgsp Controller
  */
-class SgspController extends AppController
+class SgspController extends SgcComController
 {
     public $viewClass = 'Json';
 
@@ -33,42 +33,33 @@ class SgspController extends AppController
      */
     public function payCheck()
     {
-      // initialize
-      $this->log("======================================================","debug");
-      $this->log("■ payCheck START (SgspController)","debug");
+        // initialize
+        $this->logStart("Sgsp | payCheck");
 
-      // 設定情報を取得
-      $config = Configure::read('STGR');
+        // 設定情報を取得
+        $this->initializeAction('GOLF');
 
-      $logData = $this->request->data;
+        // payCheck START
+        $this->logSgStart("SgspPayCheck");
 
-      $this->log($logData,"debug");
+        $pSgspPayCheck = new SgspPayCheck();
+        $retSgspPayCheck = $this->postJson($pSgspPayCheck, self::ERROR);
 
-      $result = array();
-      //$result['Php_Api'] = 'payCheck';
+        $responseSgspPayCheck = isset($retSgspPayCheck['response']) ? $retSgspPayCheck['response'] : null;
 
-      // payCheck START
-      $this->log("SgspPayCheck START","debug");
-
-      $pSgspPayCheck = new SgspPayCheck();
-      $retSgspPayCheck = $this->postJson($pSgspPayCheck, self::ERROR);
-      $responseSgspPayCheck = isset($retSgspPayCheck['response']) ? $retSgspPayCheck['response'] : null;
-
-      if (self::ERROR == $retSgspPayCheck['success']) {
-        $this->log("payCheck CONNECTION ERROR ","debug");
-        throw new Exception('上位通信アプリ接続エラー');
-      } else {
-        if ($responseSgspPayCheck) {
-          $result['PayCheckResult'] = $retSgspPayCheck['response'];
+        if (self::ERROR == $retSgspPayCheck['success']) {
+            $this->log("payCheck CONNECTION ERROR ","debug");
+            throw new Exception('上位通信アプリ接続エラー');
+        } else {
+            if ($responseSgspPayCheck) {
+            $result['PayCheckResult'] = $retSgspPayCheck['response'];
+            }
         }
-      }
-
-      $this->log($result,"debug");
-      $this->set('result', $result);
-      $this->render('response');
-
-      $this->log("■ payCheck END (SgspController)","debug");
-    }
+    
+        $this->finalizeAction($result);
+    
+        $this->logEnd("Sgsp | payCheck");
+    }    
 
     /**
      * 精算明細情報問合せ
@@ -77,41 +68,31 @@ class SgspController extends AppController
      */
     public function payCheckDetail()
     {
-      // initialize
-      $this->log("======================================================","debug");
-      $this->log("■ payCheckDetail START (SgspController)","debug");
+        // initialize
+        $this->logStart("Sgsp | payCheckDetail");
 
-      // 設定情報を取得
-      $config = Configure::read('STGR');
+        // 設定情報を取得
+        $this->initializeAction('GOLF');
 
-      $logData = $this->request->data;
+        // SgspPayCheckDetail START
+        $this->logSgStart("SgspPayCheckDetail");
 
-      $this->log($logData,"debug");
+        $pSgspPayCheckDetail = new SgspPayCheckDetail();
+        $retSgspPayCheckDetail = $this->postJson($pSgspPayCheckDetail, self::ERROR);
+        $responseSgspPayCheckDetail = isset($retSgspPayCheckDetail['response']) ? $retSgspPayCheckDetail['response'] : null;
 
-      $result = array();
-      //$result['Php_Api'] = 'payCheckDetail';
-
-      // SgspPayCheckDetail START
-      $this->log("SgspPayCheckDetail START","debug");
-
-      $pSgspPayCheckDetail = new SgspPayCheckDetail();
-      $retSgspPayCheckDetail = $this->postJson($pSgspPayCheckDetail, self::ERROR);
-      $responseSgspPayCheckDetail = isset($retSgspPayCheckDetail['response']) ? $retSgspPayCheckDetail['response'] : null;
-
-      if (self::ERROR == $retSgspPayCheckDetail['success']) {
+        if (self::ERROR == $retSgspPayCheckDetail['success']) {
         $this->log("payCheckDetail CONNECTION ERROR ","debug");
         throw new Exception('上位通信アプリ接続エラー');
-      } else {
-        if ($responseSgspPayCheckDetail) {
-          $result['PayCheckDetailResult'] = $retSgspPayCheckDetail['response'];
+        } else {
+            if ($responseSgspPayCheckDetail) {
+                $result['PayCheckDetailResult'] = $retSgspPayCheckDetail['response'];
+            }
         }
-      }
 
-      $this->log($result,"debug");
-      $this->set('result', $result);
-      $this->render('response');
+        $this->finalizeAction($result);
 
-      $this->log("■ payCheckDetail END (SgspController)","debug");
+        $this->logEnd("Sgsp | payCheckDetail");
     }
 
     /**
@@ -121,42 +102,32 @@ class SgspController extends AppController
      */
     public function pay()
     {
-      // initialize
-      $this->log("======================================================","debug");
-      $this->log("■ pay START (SgspController)","debug");
+        // initialize
+        $this->logStart("Sgsp | Pay");
 
-      // 設定情報を取得
-      $config = Configure::read('STGR');
+        // 設定情報を取得
+        $this->initializeAction('GOLF');
+    
+        // SgspPay START
+        $this->logSgStart("SgspPay");
 
-      $logData = $this->request->data;
+        $pSgspPay = new SgspPay();
+        $retSgspPay = $this->postJson($pSgspPay, self::ERROR);
+        $responseSgspPay = isset($retSgspPay['response']) ? $retSgspPay['response'] : null;
 
-      $this->log($logData,"debug");
-
-      $result = array();
-      //$result['Php_Api'] = 'pay';
-
-      // SgspPay START
-      $this->log("SgspPay START","debug");
-
-      $pSgspPay = new SgspPay();
-      $retSgspPay = $this->postJson($pSgspPay, self::ERROR);
-      $responseSgspPay = isset($retSgspPay['response']) ? $retSgspPay['response'] : null;
-
-      if (self::ERROR == $retSgspPay['success']) {
-        $this->log("pay CONNECTION ERROR ","debug");
-        throw new Exception('上位通信アプリ接続エラー');
-      } else {
-        if ($responseSgspPay) {
-          $result['PayResult'] = $retSgspPay['response'];
+        if (self::ERROR == $retSgspPay['success']) {
+            $this->log("pay CONNECTION ERROR ","debug");
+            throw new Exception('上位通信アプリ接続エラー');
+        } else {
+            if ($responseSgspPay) {
+                $result['PayResult'] = $retSgspPay['response'];
+            }
         }
-      }
 
-      $this->log($result,"debug");
-      $this->set('result', $result);
-      $this->render('response');
+        $this->finalizeAction($result);
 
-      $this->log("■ pay END (SgspController)","debug");
-    }
+        $this->logEnd("Sgsp | pay");
+    }    
 
     /**
      * 精算キャンセル
@@ -165,41 +136,31 @@ class SgspController extends AppController
      */
     public function payReset()
     {
-      // initialize
-      $this->log("======================================================","debug");
-      $this->log("■ payReset START (SgspController)","debug");
+        // initialize
+        $this->logStart("Sgsp | payReset");
 
-      // 設定情報を取得
-      $config = Configure::read('STGR');
+        // 設定情報を取得
+        $this->initializeAction('GOLF');
+    
+        // SgspPayReset START
+        $this->logSgStart("SgspPayReset");
 
-      $logData = $this->request->data;
+        $pSgspPayReset = new SgspPayReset();
+        $retSgspPayReset = $this->postJson($pSgspPayReset, self::ERROR);
+        $responseSgspPayReset = isset($retSgspPayReset['response']) ? $retSgspPayReset['response'] : null;
 
-      $this->log($logData,"debug");
-
-      $result = array();
-      //$result['Php_Api'] = 'payReset';
-
-      // SgspPayReset START
-      $this->log("SgspPayReset START","debug");
-
-      $pSgspPayReset = new SgspPayReset();
-      $retSgspPayReset = $this->postJson($pSgspPayReset, self::ERROR);
-      $responseSgspPayReset = isset($retSgspPayReset['response']) ? $retSgspPayReset['response'] : null;
-
-      if (self::ERROR == $retSgspPayReset['success']) {
-        $this->log("payReset CONNECTION ERROR ","debug");
-        throw new Exception('上位通信アプリ接続エラー');
-      } else {
-        if ($responseSgspPayReset) {
-          $result['PayResetResult'] = $retSgspPayReset['response'];
+        if (self::ERROR == $retSgspPayReset['success']) {
+            $this->log("payReset CONNECTION ERROR ","debug");
+            throw new Exception('上位通信アプリ接続エラー');
+        } else {
+            if ($responseSgspPayReset) {
+                $result['PayResetResult'] = $retSgspPayReset['response'];
+            }
         }
-      }
 
-      $this->log($result,"debug");
-      $this->set('result', $result);
-      $this->render('response');
+        $this->finalizeAction($result);
 
-      $this->log("■ payReset END (SgspController)","debug");
+        $this->logEnd("Sgsp | payReset");
     }
 
     /**
@@ -209,41 +170,31 @@ class SgspController extends AppController
      */
     public function payReceipt()
     {
-      // initialize
-      $this->log("======================================================","debug");
-      $this->log("■ payReceipt START (SgspController)","debug");
+        // initialize
+        $this->logStart("Sgsp | payReceipt");
 
-      // 設定情報を取得
-      $config = Configure::read('STGR');
+        // 設定情報を取得
+        $this->initializeAction('GOLF');
+    
+        // SgspPayReceipt START
+        $this->logSgStart("SgspPayReceipt");
 
-      $logData = $this->request->data;
+        $pSgspPayReceipt = new SgspPayReceipt();
+        $retSgspPayReceipt = $this->postJson($pSgspPayReceipt, self::ERROR);
+        $responseSgspPayReceipt = isset($retSgspPayReceipt['response']) ? $retSgspPayReceipt['response'] : null;
 
-      $this->log($logData,"debug");
-
-      $result = array();
-      //$result['Php_Api'] = 'payReset';
-
-      // SgspPayReceipt START
-      $this->log("SgspPayReceipt START","debug");
-
-      $pSgspPayReceipt = new SgspPayReceipt();
-      $retSgspPayReceipt = $this->postJson($pSgspPayReceipt, self::ERROR);
-      $responseSgspPayReceipt = isset($retSgspPayReceipt['response']) ? $retSgspPayReceipt['response'] : null;
-
-      if (self::ERROR == $retSgspPayReceipt['success']) {
-        $this->log("payReceipt CONNECTION ERROR ","debug");
-        throw new Exception('上位通信アプリ接続エラー');
-      } else {
-        if ($responseSgspPayReceipt) {
-          $result['PayReceiptResult'] = $retSgspPayReceipt['response'];
+        if (self::ERROR == $retSgspPayReceipt['success']) {
+            $this->log("payReceipt CONNECTION ERROR ","debug");
+            throw new Exception('上位通信アプリ接続エラー');
+        } else {
+            if ($responseSgspPayReceipt) {
+                $result['PayReceiptResult'] = $retSgspPayReceipt['response'];
+            }
         }
-      }
 
-      $this->log($result,"debug");
-      $this->set('result', $result);
-      $this->render('response');
+        $this->finalizeAction($result);
 
-      $this->log("■ payReceipt END (SgspController)","debug");
+        $this->logEnd("Sgsp | payReceipt");
     }
 
     /**
@@ -253,41 +204,31 @@ class SgspController extends AppController
      */
     public function payPurchase()
     {
-      // initialize
-      $this->log("======================================================","debug");
-      $this->log("■ payPurchase START (SgspController)","debug");
+        // initialize
+        $this->logStart("Sgsp | payPurchase");
 
-      // 設定情報を取得
-      $config = Configure::read('STGR');
+        // 設定情報を取得
+        $this->initializeAction('GOLF');
+    
+        // SgspPayPurchase START
+        $this->logSgStart("SgspPayPurchase START");
 
-      $logData = $this->request->data;
+        $pSgspPayPurchase = new SgspPayPurchase();
+        $retSgspPayPurchase = $this->postJson($pSgspPayPurchase, self::ERROR);
+        $responseSgspPayPurchase = isset($retSgspPayPurchase['response']) ? $retSgspPayPurchase['response'] : null;
 
-      $this->log($logData,"debug");
-
-      $result = array();
-      //$result['Php_Api'] = 'payReset';
-
-      // SgspPayPurchase START
-      $this->log("SgspPayPurchase START","debug");
-
-      $pSgspPayPurchase = new SgspPayPurchase();
-      $retSgspPayPurchase = $this->postJson($pSgspPayPurchase, self::ERROR);
-      $responseSgspPayPurchase = isset($retSgspPayPurchase['response']) ? $retSgspPayPurchase['response'] : null;
-
-      if (self::ERROR == $retSgspPayPurchase['success']) {
-        $this->log("payPurchase CONNECTION ERROR ","debug");
-        throw new Exception('上位通信アプリ接続エラー');
-      } else {
-        if ($responseSgspPayPurchase) {
-          $result['PayPurchaseResult'] = $retSgspPayPurchase['response'];
+        if (self::ERROR == $retSgspPayPurchase['success']) {
+            $this->log("payPurchase CONNECTION ERROR ","debug");
+            throw new Exception('上位通信アプリ接続エラー');
+        } else {
+            if ($responseSgspPayPurchase) {
+                $result['PayPurchaseResult'] = $retSgspPayPurchase['response'];
+            }
         }
-      }
 
-      $this->log($result,"debug");
-      $this->set('result', $result);
-      $this->render('response');
+        $this->finalizeAction($result);
 
-      $this->log("■ payPurchase END (SgspController)","debug");
+        $this->logEnd("Sgsp | payPurchase");
     }
 
     /**
@@ -297,43 +238,33 @@ class SgspController extends AppController
      */
     public function payPurchaseDecision()
     {
-      // initialize
-      $this->log("======================================================","debug");
-      $this->log("■ payPurchaseDecision START (SgspController)","debug");
+        // initialize
+        $this->logStart("Sgsp | payPurchaseDecesion");
 
-      // 設定情報を取得
-      $config = Configure::read('STGR');
+        // 設定情報を取得
+        $this->initializeAction('GOLF');
 
-      $logData = $this->request->data;
+        // SgspPayPurchaseDecision START
+        $this->logSgStart("SgspPayPurchaseDecision");
+    
+        $pSgspPayPurchaseDecision = new SgspPayPurchaseDecision();
+        $retSgspPayPurchaseDecision = $this->postJson($pSgspPayPurchaseDecision, self::ERROR);
+        $responseSgspPayPurchaseDecision = isset($retSgspPayPurchaseDecision['response']) ? $retSgspPayPurchaseDecision['response'] : null;
 
-      $this->log($logData,"debug");
-
-      $result = array();
-      //$result['Php_Api'] = 'payReset';
-
-      // SgspPayPurchaseDecision START
-      $this->log("SgspPayPurchaseDecision START","debug");
-
-      $pSgspPayPurchaseDecision = new SgspPayPurchaseDecision();
-      $retSgspPayPurchaseDecision = $this->postJson($pSgspPayPurchaseDecision, self::ERROR);
-      $responseSgspPayPurchaseDecision = isset($retSgspPayPurchaseDecision['response']) ? $retSgspPayPurchaseDecision['response'] : null;
-
-      if (self::ERROR == $retSgspPayPurchaseDecision['success']) {
-        $this->log("payPurchaseDecision CONNECTION ERROR ","debug");
-        throw new Exception('上位通信アプリ接続エラー');
-      } else {
-        if ($responseSgspPayPurchaseDecision) {
-          $result['PayPurchaseDecisionResult'] = $retSgspPayPurchaseDecision['response'];
+        if (self::ERROR == $retSgspPayPurchaseDecision['success']) {
+            $this->log("payPurchaseDecision CONNECTION ERROR ","debug");
+            throw new Exception('上位通信アプリ接続エラー');
+        } else {
+            if ($responseSgspPayPurchaseDecision) {
+                $result['PayPurchaseDecisionResult'] = $retSgspPayPurchaseDecision['response'];
+            }
         }
-      }
 
-      $this->log($result,"debug");
-      $this->set('result', $result);
-      $this->render('response');
+        $this->finalizeAction($result);
 
-      $this->log("■ payPurchaseDecision END (SgspController)","debug");
+        $this->logEnd("Sgsp | payPurchaseDecision");
     }
-
+    
     /**
      * ポイント精算情報問合せ
      *
@@ -341,95 +272,47 @@ class SgspController extends AppController
      */
     public function pointPayCheck()
     {
-      // initialize
-      $this->log("======================================================","debug");
-      $this->log("■ pointPayCheck START (SgspController)","debug");
+        // initialize
+        $this->logStart("Sgsp | pointPayCheck");
 
-      // 設定情報を取得
-      $config = Configure::read('STGR');
+        // 設定情報を取得
+        $this->initializeAction('GOLF');
+    
+        // SgspPointPayCheck START
+        $this->logSgStart("SgspPointPayCheck");
 
-      $logData = $this->request->data;
-
-      $this->log($logData,"debug");
-
-      $result = array();
-      //$result['Php_Api'] = 'payReset';
-
-      // SgspPointPayCheck START
-      $this->log("SgspPointPayCheck START","debug");
-
-      $pSgspPointPayCheck = new SgspPointPayCheck();
-      $retSgspPointPayCheck = $this->postJson($pSgspPointPayCheck, self::ERROR);
-      $responseSgspPointPayCheck = isset($retSgspPointPayCheck['response']) ? $retSgspPointPayCheck['response'] : null;
-
-      if (self::ERROR == $retSgspPointPayCheck['success']) {
-        $this->log("pointPayCheck CONNECTION ERROR ","debug");
-        throw new Exception('上位通信アプリ接続エラー');
-      } else {
-        if ($responseSgspPointPayCheck) {
-          $result['PointPayCheckResult'] = $retSgspPointPayCheck['response'];
-          if (isset($result['PointPayCheckResult'])
-            && isset($result['PointPayCheckResult']['BillingAmount'])) {
-              // 請求金額がマイナスの場合
-              if ($result['PointPayCheckResult']['BillingAmount'] < 0) {
-                $result['PointPayCheckResult']['Message'] = '900002';
-              } 
-              // 利用可能ポイントの上限が精算金額を超える場合
-              else if (isset($result['PointPayCheckResult']['UsePointsLimitUpper'])
-                    && $result['PointPayCheckResult']['UsePointsLimitUpper'] > $result['PointPayCheckResult']['BillingAmount']
-                    && isset($this->request->data['UsePoints']) && $this->request->data['UsePoints'] <= 0) {
-                $result['PointPayCheckResult']['Message'] = '900001';
-              }
-              // 請求金額が精算機の精算金額の上限
-              else if (isset($this->request->data['PaymentLimit'])
+        $pSgspPointPayCheck = new SgspPointPayCheck();
+        $retSgspPointPayCheck = $this->postJson($pSgspPointPayCheck, self::ERROR);
+        $responseSgspPointPayCheck = isset($retSgspPointPayCheck['response']) ? $retSgspPointPayCheck['response'] : null;
+        if (self::ERROR == $retSgspPointPayCheck['success']) {
+            $this->log("pointPayCheck CONNECTION ERROR ","debug");
+            throw new Exception('上位通信アプリ接続エラー');
+        } else {
+            if ($responseSgspPointPayCheck) {
+                $result['PointPayCheckResult'] = $retSgspPointPayCheck['response'];
+                if (isset($result['PointPayCheckResult'])
+                && isset($result['PointPayCheckResult']['BillingAmount'])) {
+                    // 請求金額がマイナスの場合
+                    if ($result['PointPayCheckResult']['BillingAmount'] < 0) {
+                        $result['PointPayCheckResult']['Message'] = '900002';
+                    }
+                    // 利用可能ポイントの上限が精算金額を超える場合
+                    else if (isset($result['PointPayCheckResult']['UsePointsLimitUpper'])
+                        && $result['PointPayCheckResult']['UsePointsLimitUpper'] > $result['PointPayCheckResult']['BillingAmount']
+                        && isset($this->request->data['UsePoints']) && $this->request->data['UsePoints'] <= 0) {
+                            $result['PointPayCheckResult']['Message'] = '900001';
+                    }
+                    // 請求金額が精算機の精算金額の上限
+                    else if (isset($this->request->data['PaymentLimit'])
                         && $this->request->data['PaymentLimit'] > 0
                         && $result['PointPayCheckResult']['BillingAmount'] > $this->request->data['PaymentLimit']) {
-                $result['PointPayCheckResult']['Message'] = '900003';
-              }
-          }
-        }
-      }
-
-      $this->log($result,"debug");
-      $this->set('result', $result);
-      $this->render('response');
-
-      $this->log("■ pointPayCheck END (SgspController)","debug");
-    }
-
-    /**
-     * 通信を行う
-     *
-     * @return null
-     */
-    private function postJson($obj, $errCode)
-    {
-      // $this->log(" postJson START","debug");
-
-      $result = array();
-      $result['success'] = $errCode;
-      $result['result_code'] = '';
-      $result['message'] = '';
-
-      try {
-            if($this->request->is('post')) {
-
-              // $this->log("  Pms Api execute START","debug");
-              $response = $obj->execute($this->request->data);
-              // $this->log("  Pms APi execute END","debug");
-
-              $result['response'] = $response;
-
-              $result['success'] = self::SUCCESS;
+                            $result['PointPayCheckResult']['Message'] = '900003';
+                    }
+                }
             }
-        } catch (Exception $e) {
-            $result = json_decode($e->getMessage(), true);
-            $result['success'] = $errCode;
         }
+        $this->finalizeAction($result);
 
-        // $this->log(" postJson END","debug");
-
-        return $result;
+        $this->logEnd("Sgsp | pointPayCheck");
     }
-
-  }
+}
