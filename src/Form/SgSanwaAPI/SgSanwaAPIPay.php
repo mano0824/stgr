@@ -41,17 +41,16 @@ class SgSanwaAPIPay extends AppSanwaForm {
                 $data['PeriodYmd'] = " ";
             }
 
+            $trkNoList = [];
+            for ($i = 0; $i < COUNT($data['TrkNoList']); $i++) {
+                $trkNoList[$i] = $data['TrkNoList'][$i]['TrkNo'] ?? "";
+            }
             $params = array(
                 'MachineNo'       => $data['MachineNo'],
                 'CallNo'          => $data['CallNo'],
-                'TrkNoList'       => $data['TrkNoList'],
-                'PayKbn'          => $data['PayKbn'],
-                'CKingaku'        => $data['CKingaku'],
-                'CMemNo'          => $data['CMemNo'],
-                'CMemName'        => $data['CMemName'],
-                'CreditName'      => $data['CreditName'],
-                'PeriodYmd'       => $data['PeriodYmd'],
-                'CreditReceiptNo' => $data['CreditReceiptNo'],
+                'TrkNoList'       => $trkNoList,
+                'PaymentType'     => $data['PayKbn'],
+                'PaymentAmount'   => $data['CKingaku']
             );
 
             if($this->config['Debug']){

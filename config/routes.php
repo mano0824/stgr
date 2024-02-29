@@ -59,7 +59,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/api/test', ['controller' => 'Api', 'action' => 'test']);
     $routes->connect('/api/getOperationStatus', ['controller' => 'Api', 'action' => 'getOperationStatus']);
 
-    // SgSanwaAPI
+    // SgSanwaWebAPI
     $routes->connect('/sgsanwaapi/payCheck', ['controller' => 'SgSanwaAPI', 'action' => 'payCheck']);
     $routes->connect('/sgsanwaapi/pay', ['controller' => 'SgSanwaAPI', 'action' => 'pay']);
     $routes->connect('/sgsanwaapi/payReset', ['controller' => 'SgSanwaAPI', 'action' => 'payReset']);

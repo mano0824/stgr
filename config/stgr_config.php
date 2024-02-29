@@ -28,6 +28,7 @@ return [
             'FixedResponse' => false,                // 固定応答モード
             'Debug' => true,                        // デバッグログ出力モード
             'TimeOut' => 180,                        // 接続タイムアウト秒数
+            // 'ServiceURL' => 'http://localhost:88/sgsanwaapi/',            // 上位通信アプリ接続先URL
             'ServiceURL' => 'http://172.16.35.169:3001/stgr/sgsanwaapi/',            // mockoonローカル用
             // 'ServiceURL' => 'http://127.0.0.1:3001/stgr/sgsanwaapi/',            // mockoonサーフェス用
             'X-Api-Key' => 'UzUb6zbJugJUiYP9',

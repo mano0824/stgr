@@ -27,6 +27,11 @@ class AppSanwaForm extends Form {
      * @return array APIレスポンス
      */
     protected function getContents(array $data, $type) {
+        $sanwaFlg = false;
+        if ($sanwaFlg) {
+            $data['MachineNo'] = 80;
+            $data['HolderNo'] = [105];
+        }
 
         $url = $this->config['ServiceURL'].$this->config['urlParams'][$type];
         $ch = curl_init($url);

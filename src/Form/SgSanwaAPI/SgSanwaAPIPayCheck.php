@@ -24,29 +24,16 @@ class SgSanwaAPIPayCheck extends AppSanwaForm {
     // バリデーション後に実行する処理
     protected function _execute(array $data= array()) {
         try {
-            // $params = array(
-            //     'MachineNo' => $data['MachineNo'],
-            //     'CallNo'    => $data['CallNo'],
-            //     'TrkNoList' => $data['TrkNoList']
-            // );
-
-            
-            // $trkNoList = [];
-            // for ($i = 0; $i < COUNT($data['TrkNoList']); $i++) {
-            //     $trkNoList[$i] = $data['TrkNoList'][$i]['TrkNo'] ?? "";
-            // }
-            // $params = [
-            //     "MachineNo" => $data['MachineNo'],
-            //     "CallNo"    => $data['CallNo']['callNo'],
-            //     "HolderNo"  => $trkNoList
-            // ];
-
-            // 三和システムテスト用
+            $trkNoList = [];
+            for ($i = 0; $i < COUNT($data['TrkNoList']); $i++) {
+                $trkNoList[$i] = $data['TrkNoList'][$i]['TrkNo'] ?? "";
+            }
             $params = [
-                "MachineNo" => 80,
+                "MachineNo" => $data['MachineNo'],
                 "CallNo"    => $data['CallNo']['callNo'],
-                "HolderNo"  => [102, 103, 104, 105]
+                "HolderNo"  => $trkNoList
             ];
+            
 
             if($this->config['Debug']){
                 Log::write("debug",$params);

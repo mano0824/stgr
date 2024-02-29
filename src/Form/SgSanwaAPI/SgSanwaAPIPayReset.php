@@ -24,11 +24,15 @@ class SgSanwaAPIPayReset extends AppSanwaForm {
     // バリデーション後に実行する処理
     protected function _execute(array $data= array()) {
         try {
-            $params = array(
-                'MachineNo' => $data['MachineNo'],
-                'CallNo'    => $data['CallNo'],
-                'TrkNoList' => $data['TrkNoList']
-            );
+            $trkNoList = [];
+            for ($i = 0; $i < COUNT($data['TrkNoList']); $i++) {
+                $trkNoList[$i] = $data['TrkNoList'][$i]['TrkNo'] ?? "";
+            }
+            $params = [
+                "MachineNo" => $data['MachineNo'],
+                "CallNo"    => $data['CallNo'],
+                "HolderNo"  => $trkNoList
+            ];
 
             if($this->config['Debug']){
                 Log::write("debug",$params);
@@ -44,12 +48,12 @@ class SgSanwaAPIPayReset extends AppSanwaForm {
             $responseConvert = [
                 'SgSanwa_Api' => $response['SgSanwa_Api'],
                 "ReturnCode"  => $response['ReturnCode'],
-                "ErrorData"   => $response['ErrorData'],
+                "ErrData"     => $response['ErrData'],
                 "Message"     => $response['Message']
             ];
-            if ($responseConvert['ErrorData'] != null) {
-                $responseConvert['ErrorData']['ErrCode'] = $response['ErrorData']['ErrCode'];
-                $responseConvert['ErrorData']['ErrMessage'] = (!empty((string)$response['ErrorData']['ErrMessage'])) ? (string)$response['ErrorData']['ErrMessage'] : "";
+            if ($responseConvert['ErrData'] != null) {
+                $responseConvert['ErrData']['ErrCode'] = $response['ErrData']['ErrCode'];
+                $responseConvert['ErrData']['ErrMessage'] = (!empty((string)$response['ErrData']['ErrMessage'])) ? (string)$response['ErrData']['ErrMessage'] : "";
             }
 
             if($this->config['Debug']){

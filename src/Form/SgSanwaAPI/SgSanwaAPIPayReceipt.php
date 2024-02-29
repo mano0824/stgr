@@ -27,8 +27,7 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
             $params = array(
                 'MachineNo' => $data['MachineNo'],
                 'CallNo'    => $data['CallNo'],
-                'HostBillNo' => $data['HostBillNo'],
-                'PrintKbn'  => $data['PrintKbn']
+                'BillNo'    => $data['HostBillNo']
             );
 
             if($this->config['Debug']){
