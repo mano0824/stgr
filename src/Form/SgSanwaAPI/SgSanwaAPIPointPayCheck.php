@@ -24,6 +24,7 @@ class SgSanwaAPIPointPayCheck extends AppSanwaForm {
     // バリデーション後に実行する処理
     protected function _execute(array $data= array()) {
         try {
+            $config = Configure::read("API_OPERATION");
             $trkNoList = [];
             for ($i = 0; $i < COUNT($data['TrkNoList']); $i++) {
                 $trkNoList[$i] = $data['TrkNoList'][$i]['TrkNo'] ?? "";
@@ -35,13 +36,13 @@ class SgSanwaAPIPointPayCheck extends AppSanwaForm {
             ];
 
 
-            if($this->config['Debug']){
+            if($config['DEBUG']){
                 Log::write("debug",$params);
             }
 
-            if($this->config['FixedResponse']){
+            if($config['FIXED_RESPONSE']){
                 // 固定応答モード
-                $response = Configure::read('Sgsp_Pay_Check_Res');
+                $response = Configure::read('SgSanwaAPI_Point_Pay_Check_Res');
             }else{
                 $response = $this->getContents($params, $this->type);
             }
@@ -67,7 +68,7 @@ class SgSanwaAPIPointPayCheck extends AppSanwaForm {
 
                 $responseOuterItem = [
                     'BillingAmount'       => (int)$response['ResultInformation']['BillingAmountTotal'],
-                    'UsePoints'           => (int)$params['UsePoints'],
+                    'UsePoints'           => (int)$data['UsePoints'],
                     'UsePointsKind'       => 0,
                     'PointBalance'        => (int)$item['PointBalance'],
                     'UsePointsLimitUpper' => (int)$item['AvailablePointMax'],
@@ -81,7 +82,7 @@ class SgSanwaAPIPointPayCheck extends AppSanwaForm {
                 $responseConvert += $responseOuterItem;
             }
 
-            if($this->config['Debug']){
+            if($config['DEBUG']){
                 Log::write("debug", $responseConvert);
             }
         } catch (Exception $e) {

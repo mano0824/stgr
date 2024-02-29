@@ -31,10 +31,14 @@ abstract class SgcComController extends AppController
     protected function initializeAction($type)
     {
         // 設定情報を取得
-        $config = Configure::read("STGR.{$type}");
+        if ($type == 'SanwaAPI' || $type == 'TestSanwaAPI') {
+            $config = Configure::read("API_OPERATION");
+        } else {
+            $config = Configure::read("STGR.{$type}");
+        }
 
         $logData = $this->request->data;
-        if ($config['Debug']) {
+        if ($config['DEBUG']) {
             $this->log($logData, "debug");
         }
     }

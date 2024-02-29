@@ -24,6 +24,7 @@ class SgSanwaAPIPayReset extends AppSanwaForm {
     // バリデーション後に実行する処理
     protected function _execute(array $data= array()) {
         try {
+            $config = Configure::read("API_OPERATION");
             $trkNoList = [];
             for ($i = 0; $i < COUNT($data['TrkNoList']); $i++) {
                 $trkNoList[$i] = $data['TrkNoList'][$i]['TrkNo'] ?? "";
@@ -34,13 +35,13 @@ class SgSanwaAPIPayReset extends AppSanwaForm {
                 "HolderNo"  => $trkNoList
             ];
 
-            if($this->config['Debug']){
+            if($config['DEBUG']){
                 Log::write("debug",$params);
             }
 
-            if($this->config['FixedResponse']){
+            if($config['FIXED_RESPONSE']){
                 // 固定応答モード
-                $response = Configure::read('Sgsp_Pay_Reset_Res');
+                $response = Configure::read('SgSanwaAPI_Pay_Reset_Res');
             }else{
                 $response = $this->getContents($params, $this->type);
             }
@@ -56,7 +57,7 @@ class SgSanwaAPIPayReset extends AppSanwaForm {
                 $responseConvert['ErrData']['ErrMessage'] = (!empty((string)$response['ErrData']['ErrMessage'])) ? (string)$response['ErrData']['ErrMessage'] : "";
             }
 
-            if($this->config['Debug']){
+            if($config['DEBUG']){
                 Log::write("debug", $responseConvert);
             }
         } catch (Exception $e) {

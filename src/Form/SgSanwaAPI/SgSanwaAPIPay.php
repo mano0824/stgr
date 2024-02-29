@@ -24,6 +24,7 @@ class SgSanwaAPIPay extends AppSanwaForm {
     // バリデーション後に実行する処理
     protected function _execute(array $data= array()) {
         try {
+            $config = Configure::read("API_OPERATION");
             if (!isset($data['CMemNo']) || strlen($data['CMemNo']) <= 0)
             {
                 $data['CMemNo'] = " ";
@@ -53,13 +54,13 @@ class SgSanwaAPIPay extends AppSanwaForm {
                 'PaymentAmount'   => $data['CKingaku']
             );
 
-            if($this->config['Debug']){
+            if($config['DEBUG']){
                 Log::write("debug",$params);
             }
 
-            if($this->config['FixedResponse']){
+            if($config['FIXED_RESPONSE']){
                 // 固定応答モード
-                $response = Configure::read('Sgsp_Pay_Res');
+                $response = Configure::read('SgSanwaAPI_Pay_Res');
             }else{
                 $response = $this->getContents($params, $this->type);
             }
@@ -74,7 +75,7 @@ class SgSanwaAPIPay extends AppSanwaForm {
                 'Message'     => (string)$response['Message'],
             ];
 
-            if($this->config['Debug']){
+            if($config['DEBUG']){
                 Log::write("debug", $responseConvert);
             }
 

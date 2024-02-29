@@ -14,9 +14,10 @@ class AppSanwaForm extends Form {
      * constructor.
      */
     public function __construct() {
-        $config = Configure::read('STGR');
-        $this->config = $config['SanwaAPI'];
-        // $this->config = $config['TestSanwaAPI'];
+        // $apiConfig = Configure::read('API_OPERATION');
+        // $apiSelect = [0 => "TestSanwaAPI", 1 => "SanwaAPI"];
+        // $config = Configure::read('STGR');
+        // $this->config = $config[$apiSelect[$apiConfig['UseEnvironment']]];
     }
 
     /**
@@ -27,30 +28,41 @@ class AppSanwaForm extends Form {
      * @return array APIレスポンス
      */
     protected function getContents(array $data, $type) {
-        $sanwaFlg = false;
-        if ($sanwaFlg) {
+        $apiConfig = Configure::read('API_OPERATION');
+        $authonfig = Configure::read('AUTHENTICATION');
+
+        if ($apiConfig['USE_ENVIRONMENT'] == 0) {
             $data['MachineNo'] = 80;
-            $data['HolderNo'] = [105];
+            $data['HolderNo'] = [109,110,111,112];
         }
 
-        $url = $this->config['ServiceURL'].$this->config['urlParams'][$type];
+        Log::write("debug", COUNT($apiConfig));
+        $urlParams = [
+            'PayCheck'      => $apiConfig['PAY_CHECK'],
+            'Pay'           => $apiConfig['PAY'],
+            'PayReset'      => $apiConfig['PAY_RESET'],
+            'PayReceipt'    => $apiConfig['PAY_RECEIPT'],
+            'PointPayCheck' => $apiConfig['POINT_PAY_CHECK']
+            ];
+        $url = $apiConfig['SERVICE_URL'].$urlParams[$type];
         $ch = curl_init($url);
 
         $content = json_encode($data);
 
-        $header = array(
-                    "Content-type: application/json",
-                    "Accept-Charset: UTF-8",
-                    "X-Api-Key: " . $this->config['X-Api-Key'],
-                    "X-Manufacturer-Key: " . $this->config['X-Manufacturer-Key']
-                );
+        $header = [];
+        for ($i = 1; $i <= COUNT($authonfig) / 2; $i++) {
+            if ($authonfig["HEADER_NAME_{$i}"] == "" && $authonfig["NAME_DATA_{$i}"] == "") {
+                continue;
+            }
+            $header[$i - 1] = $authonfig["HEADER_NAME_{$i}"] .": " . $authonfig["NAME_DATA_{$i}"];
+        }
 
         curl_setopt_array($ch, [
             CURLOPT_HTTPHEADER => $header,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => $content,
-            CURLOPT_TIMEOUT => $this->config['TimeOut']
+            CURLOPT_TIMEOUT => $apiConfig['TIME_OUT']
         ]);
 
         $contents   = curl_exec($ch);

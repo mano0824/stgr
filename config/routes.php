@@ -66,6 +66,15 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/sgsanwaapi/payReceipt', ['controller' => 'SgSanwaAPI', 'action' => 'payReceipt']);
     $routes->connect('/sgsanwaapi/pointPayCheck', ['controller' => 'SgSanwaAPI', 'action' => 'pointPayCheck']);
 
+    // SgWebAPI
+    $routes->connect('/sgwebapi/payCheck', ['controller' => 'SgWebAPI', 'action' => 'payCheck']);
+    $routes->connect('/sgwebapi/pay', ['controller' => 'SgWebAPI', 'action' => 'pay']);
+    $routes->connect('/sgwebapi/payReset', ['controller' => 'SgWebAPI', 'action' => 'payReset']);
+    $routes->connect('/sgwebapi/payReceipt', ['controller' => 'SgWebAPI', 'action' => 'payReceipt']);
+    $routes->connect('/sgwebapi/payPurchase', ['controller' => 'SgWebAPI', 'action' => 'payPurchase']);
+    $routes->connect('/sgwebapi/payPurchaseDecision', ['controller' => 'SgWebAPI', 'action' => 'payPurchaseDecision']);
+    $routes->connect('/sgwebapi/pointPayCheck', ['controller' => 'SgWebAPI', 'action' => 'pointPayCheck']);
+
     /**
      * Connect catchall routes for all controllers.
      *

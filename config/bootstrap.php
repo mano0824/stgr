@@ -56,6 +56,7 @@ use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
+use Cake\Core\Configure\Engine\IniConfig;
 use Cake\Core\Plugin;
 use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
@@ -76,9 +77,11 @@ use Cake\Utility\Security;
  */
 try {
     Configure::config('default', new PhpConfig());
+    Configure::config('ini', new IniConfig());
     Configure::load('app', 'default', false);
     Configure::load('stgr_config', 'default', false);
     Configure::load('sgsp_response', 'default', false);
+    Configure::load('sanwa_config', 'ini', false);
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
 }

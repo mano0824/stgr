@@ -31,9 +31,9 @@ class SgSanwaAPIController extends SgcComController
      */
     public function payCheck()
     {        
-        $config = Configure::read("STGR.SanwaAPI");
+        $config = Configure::read("API_OPERATION");
 
-        if ($config['Debug']) {
+        if ($config['DEBUG']) {
             $this->logStart("SanwaAPI | payCheck");
         }
 
@@ -43,13 +43,13 @@ class SgSanwaAPIController extends SgcComController
         $result = array();
     
         // payCheck START
-        if ($config['Debug']) {
+        if ($config['DEBUG']) {
             $this->logSgStart("SgSanwaAPIPayCheck");
         }
 
         $pSgSanwaAPIPayCheck = new SgSanwaAPIPayCheck();
         $retSgSanwaAPIPayCheck = $this->postJson($pSgSanwaAPIPayCheck, self::ERROR);
-        if ($config['Debug']) {
+        if ($config['DEBUG']) {
             $this->log($retSgSanwaAPIPayCheck, "debug");
         }
         $responseSgSanwaAPIPayCheck = isset($retSgSanwaAPIPayCheck['response']) ? $retSgSanwaAPIPayCheck['response'] : null;
@@ -68,7 +68,7 @@ class SgSanwaAPIController extends SgcComController
         $this->finalizeAction($result);
     
         // ログの終了
-        if ($config['Debug']) {
+        if ($config['DEBUG']) {
             $this->logEnd("SanwaAPI | payCheck");
         }
     }
@@ -90,9 +90,9 @@ class SgSanwaAPIController extends SgcComController
      */
     public function pay()
     {
-        $config = Configure::read("STGR.SanwaAPI");
+        $config = Configure::read("API_OPERATION");
 
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logStart("SanwaAPI | Pay");
         }
 
@@ -100,13 +100,13 @@ class SgSanwaAPIController extends SgcComController
         $this->initializeAction('SanwaAPI');
         
         // pay START
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logSgStart("SgSanwaAPIPay");
         }
 
         $pSgSanwaAPIPay = new SgSanwaAPIPay();
         $retSgSanwaAPIPay = $this->postJson($pSgSanwaAPIPay, self::ERROR);
-        if ($config['Debug']) {
+        if ($config['DEBUG']) {
             $this->log($retSgSanwaAPIPay, "debug");
         }
         $responseSgSanwaAPIPay = isset($retSgSanwaAPIPay['response']) ? $retSgSanwaAPIPay['response'] : null;
@@ -124,7 +124,7 @@ class SgSanwaAPIController extends SgcComController
         $this->finalizeAction($result);
 
         // ログの終了
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logEnd("SanwaAPI | Pay");
         }
     }
@@ -136,9 +136,9 @@ class SgSanwaAPIController extends SgcComController
      */
     public function payReset()
     {
-        $config = Configure::read("STGR.SanwaAPI");
+        $config = Configure::read("API_OPERATION");
 
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logStart("SanwaAPI | payReset");
         }
 
@@ -146,13 +146,13 @@ class SgSanwaAPIController extends SgcComController
         $this->initializeAction('SanwaAPI');
 
         // payReset START
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logSgStart("SgSanwaAPIPayReset");
         }
 
         $pSgSanwaAPIPayReset = new SgSanwaAPIPayReset();
         $retSgSanwaAPIPayReset = $this->postJson($pSgSanwaAPIPayReset, self::ERROR);
-        if ($config['Debug']) {
+        if ($config['DEBUG']) {
             $this->log($retSgSanwaAPIPayReset, "debug");
         }
         $responseSgSanwaAPIPayReset = isset($retSgSanwaAPIPayReset['response']) ? $retSgSanwaAPIPayReset['response'] : null;
@@ -170,7 +170,7 @@ class SgSanwaAPIController extends SgcComController
         $this->finalizeAction($result);
 
         // ログの終了
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logEnd("SanwaAPI | payReset");
         }
     }
@@ -182,9 +182,9 @@ class SgSanwaAPIController extends SgcComController
      */
     public function payReceipt()
     {
-        $config = Configure::read("STGR.SanwaAPI");
+        $config = Configure::read("API_OPERATION");
 
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logStart("SanwaAPI | payReceipt");
         }
 
@@ -192,13 +192,13 @@ class SgSanwaAPIController extends SgcComController
         $this->initializeAction('SanwaAPI');
 
         // payReceipt START
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logSgStart("SgSanwaAPIPayReceipt");
         }
 
         $pSgSanwaAPIPayReceipt = new SgSanwaAPIPayReceipt();
         $retSgSanwaAPIPayReceipt = $this->postJson($pSgSanwaAPIPayReceipt, self::ERROR);
-        if ($config['Debug']) {
+        if ($config['DEBUG']) {
             $this->log($retSgSanwaAPIPayReceipt, "debug");
         }
         $responseSgSanwaAPIPayReceipt = isset($retSgSanwaAPIPayReceipt['response']) ? $retSgSanwaAPIPayReceipt['response'] : null;
@@ -216,7 +216,7 @@ class SgSanwaAPIController extends SgcComController
         $this->finalizeAction($result);
 
         // ログの終了
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logEnd("SanwaAPI | payReceipt");
         }
     }
@@ -248,9 +248,9 @@ class SgSanwaAPIController extends SgcComController
      */
     public function pointPayCheck()
     {
-        $config = Configure::read("STGR.SanwaAPI");
+        $config = Configure::read("API_OPERATION");
 
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logStart("SanwaAPI | pointPayCheck");
         }
     
@@ -258,13 +258,13 @@ class SgSanwaAPIController extends SgcComController
         $this->initializeAction('SanwaAPI');
     
         // pointPayCheck START
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logSgStart("SgSanwaAPIPointPayCheck");
         }
 
         $pSgSanwaAPIPointPayCheck = new SgSanwaAPIPointPayCheck();
         $retSgSanwaAPIPointPayCheck = $this->postJson($pSgSanwaAPIPointPayCheck, self::ERROR);
-        if ($config['Debug']) {
+        if ($config['DEBUG']) {
             $this->log($retSgSanwaAPIPointPayCheck, "debug");
         }
         $responseSgSanwaAPIPointPayCheck = isset($retSgSanwaAPIPointPayCheck['response']) ? $retSgSanwaAPIPointPayCheck['response'] : null;
@@ -301,7 +301,7 @@ class SgSanwaAPIController extends SgcComController
         $this->finalizeAction($result);
     
         // ログの終了
-        if ($config['Debug']){
+        if ($config['DEBUG']){
             $this->logEnd("SanwaAPI | pointPayCheck");
         }
     }

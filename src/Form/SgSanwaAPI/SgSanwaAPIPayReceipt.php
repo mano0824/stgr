@@ -24,19 +24,20 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
     // バリデーション後に実行する処理
     protected function _execute(array $data= array()) {
         try {
+            $config = Configure::read("API_OPERATION");
             $params = array(
                 'MachineNo' => $data['MachineNo'],
                 'CallNo'    => $data['CallNo'],
                 'BillNo'    => $data['HostBillNo']
             );
 
-            if($this->config['Debug']){
+            if($config['DEBUG']){
                 Log::write("debug",$params);
             }
 
-            if($this->config['FixedResponse']){
+            if($config['FIXED_RESPONSE']){
                 // 固定応答モード
-                $response = Configure::read('Sgsp_Pay_Check_Res');
+                $response = Configure::read('SgSanwaAPI_Pay_Receipt_Res');
             }else{
                 $response = $this->getContents($params, $this->type);
             }
@@ -332,7 +333,7 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
             //     $responseConvert['ListTax'][$i]['RowNo'] = $i + 1;
             // }
 
-            if($this->config['Debug']){
+            if($config['DEBUG']){
                 Log::write("debug",$responseConvert,);
                 if (!isCommentsEmpty($comments)) Log::write("debug", $comments);
             }
