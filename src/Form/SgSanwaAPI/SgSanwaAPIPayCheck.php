@@ -45,7 +45,7 @@ class SgSanwaAPIPayCheck extends AppSanwaForm {
             }else{
                 $response = $this->getContents($params, $this->type);
             }
-
+            
             // 項目名変換
             $responseConvert = [
                 'SgSanwa_Api'        => $response['SgSanwa_Api'],
@@ -67,7 +67,7 @@ class SgSanwaAPIPayCheck extends AppSanwaForm {
                 ];
                 $responseConvert['ListDetail'][] = $responseItem;
             }
-
+            
             if($config['DEBUG']){
                 Log::write("debug",$responseConvert);
             }

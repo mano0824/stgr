@@ -87,7 +87,7 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
                     ];
                 }
             }
-            
+
             // 税項目追加関数
             function addTaxItems(&$responseConvert, $response, $single = true) {
                 if ($single) {
@@ -253,46 +253,72 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
                                 $responseItem['TrkNo'] = 0;
 
                                 // 1人だった場合
-                                if ($humansCont == 1) {
-                                    $responseItem['Kingaku'] = ($i == 0) ? $responseItem['Kingaku'] : $response['ResultInformation']['RyoshuKingaku'];
-
-                                } else { // 複数人だった場合
-                                    $responseItem['Kingaku'] = $response['ResultInformation']['RyoshuKingaku'];
-                                }
-
+                                $responseItem['Kingaku'] = ($i == 0) ? $responseItem['Kingaku'] : $response['ResultInformation']['RyoshuKingaku'];
                                 // コメントを追加
                                 $comments[$index] = addComments($individual, $responseItem);
 
                                 $datas[] = $responseItem;
                             }
                         } else {
+                            $responseItem['ReceiptKbn'] = 1;
+                            // 最後以外の処理
+                            if ($individual != end($response['ResultInformation']['IndividualArray'])) {
+                                // コメントを追加
+                                $comments[$index] = addComments($individual, $responseItem);
+                                $datas[] = $responseItem;
+                            }
                             // 最後だけ処理
                             if ($individual == end($response['ResultInformation']['IndividualArray'])) {
-                                for ($i = 0; $i < 2; $i++) {
-                                    if ($i == 1) {
-                                        // 項目生成
-                                        $responseItem = createResponseItem($response, $individual, $detail, $receiptkbn, $detailKbn, $rowNo);
+                                for ($i = 0; $i < 3; $i++) {
+                                    //  そのままのデータ
+                                    if ($i == 0) {
                                         // コメントを追加
                                         $comments[$index] = addComments($individual, $responseItem);
-                                    }
-    
-                                    $responseItem['DetailKbn'] = ($i == 0) ? 'T' : 'R';
-                                    $responseItem['RowNo'] = 0;
-                                    $responseItem['ShohinName'] = ($i == 0) ? $responseItem['ShohinName'] : '領収金額';
-                                    $responseItem['TrkNo'] = 0;
-    
-                                    // 1人だった場合
-                                    if ($humansCont == 1) {
-                                        $responseItem['Kingaku'] = ($i == 0) ? $responseItem['Kingaku'] : $response['ResultInformation']['RyoshuKingaku'];
-    
-                                    } else { // 複数人だった場合
-                                        $responseItem['Kingaku'] = $response['ResultInformation']['RyoshuKingaku'];
-                                    }
-    
-                                    // コメントを追加
-                                    $comments[$index] = addComments($individual, $responseItem);
-    
-                                    $datas[] = $responseItem;
+                                        $datas[] = $responseItem;
+
+                                    } else if($i == 1) {// 人数合計値Tを生成
+                                        $responseItem = [
+                                            'ReceiptKbn' => 0,
+                                            'ReceiptNo'  => (int)$response['ResultInformation']['PrintNo'],
+                                            'RowNo'      => 0,
+                                            'TrkNo'      => 0, // 軽減税率がTrkNoの固定値0以外の時は項目が出ない
+                                            'DetailKbn'  => 'T',
+                                            'ShohinName' => $responseItem['ShohinName'],
+                                            'Tanka'      => '',
+                                            'Suryo'      => '',
+                                            'Kingaku'    => (int)$response['ResultInformation']['RyoshuKingaku'] ,
+                                            'Comment1'   => '',
+                                            'Comment2'   => '',
+                                            'Comment3'   => '',
+                                            'Comment4'   => '',
+                                            'Comment5'   => '',
+                                            'Comment6'   => '',
+                                            'Comment7'   => '',
+                                            'Comment8'   => '',
+                                        ];
+                                        $datas[] = $responseItem;
+                                    } else {// 領収書Rを生成
+                                        $responseItem = [
+                                            'ReceiptKbn' => 0,
+                                            'ReceiptNo'  => (int)$response['ResultInformation']['PrintNo'],
+                                            'RowNo'      => 0,
+                                            'TrkNo'      => 0, // 軽減税率がTrkNoの固定値0以外の時は項目が出ない
+                                            'DetailKbn'  => 'R',
+                                            'ShohinName' => '領収金額',
+                                            'Tanka'      => '',
+                                            'Suryo'      => '',
+                                            'Kingaku'    => (int)$response['ResultInformation']['RyoshuKingaku'] ,
+                                            'Comment1'   => '',
+                                            'Comment2'   => '',
+                                            'Comment3'   => '',
+                                            'Comment4'   => '',
+                                            'Comment5'   => '',
+                                            'Comment6'   => '',
+                                            'Comment7'   => '',
+                                            'Comment8'   => '',
+                                        ];
+                                        $datas[] = $responseItem;
+                                    }  
                                 }
                             }
                         }
@@ -328,10 +354,6 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
             }
 
             $responseConvert['Message'] = $response['Message'];
-
-            // for ($i = 0; $i < COUNT($responseConvert['ListTax']); $i++) {
-            //     $responseConvert['ListTax'][$i]['RowNo'] = $i + 1;
-            // }
 
             if($config['DEBUG']){
                 Log::write("debug",$responseConvert,);

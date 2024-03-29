@@ -68,13 +68,13 @@ class AppSanwaForm extends Form {
         $contents   = curl_exec($ch);
         $info       = curl_getinfo($ch);
         $errorNo    = curl_errno($ch);
-        
         $response = array('SgSanwa_Api'=>$type);
 
         if ($errorNo !== CURLE_OK) {
             $typeNum = $this->getProcessNumber($type);
             $endNum = $this->getErrorNumber();
             $errCode = $typeNum . $endNum;
+            
             if( $errorNo == CURLE_OPERATION_TIMEDOUT || $errorNo == CURLE_OPERATION_TIMEOUTED) {
                 throw new Exception(__('{"result_code":"61'.$errCode.'",
                                         "SgSanwa_Api":"'.$type.'",
@@ -92,10 +92,13 @@ class AppSanwaForm extends Form {
                                          "SgSanwa_Api":"'.$type.'",
                                          "message":"不明なエラー: errorNo=' . $errorNo . '"}'));
             }
+            
             return $response;
         }
 
         if ($info['http_code'] !== 200) {
+
+            
             $typeNum = $this->getProcessNumber($type);
             $endNum = $this->getErrorNumber();
             
@@ -158,7 +161,8 @@ class AppSanwaForm extends Form {
         }
 
         if ($kind == 'unknown') {
-            if ($response['ReturnCode'] === 0 || $response['ReturnCode'] === 1) {
+            if ($response['ReturnCode'] === 0) {
+            // if ($response['ReturnCode'] === 0 || $response['ReturnCode'] === 1) {
                 if ($type != 'PayReceipt' && $type != 'PayReset') {
                     $kind = $this->statusErrorKind($response, $type);
                 }
@@ -170,7 +174,7 @@ class AppSanwaForm extends Form {
                 return $response;
             }
         }
-
+        
         $response = $this->handleError($response, $type, $kind, $uniqueCode);
         return $response;
     }
@@ -334,7 +338,7 @@ class AppSanwaForm extends Form {
         return $response;
     }
 
-        /**
+    /**
      * ステータスエラーチェック（種類）
      * @param array $response 結果
      * @param string $type 精算タイプ情報
