@@ -113,9 +113,10 @@ class AppSanwaForm extends Form {
             }
             $errCode = $typeNum . $endNum;
 
-            throw new Exception(__('{"result_code":"62'.$errCode.'",
-                                    "SgSanwa_Api":"'.$type.'",
-                                    "message":" http_code:' . $info['http_code'] . '"}'));
+            // throw new Exception(__('{"result_code":"62'.$errCode.'",
+            //                         "SgSanwa_Api":"'.$type.'",
+            //                         "message":" http_code:' . $info['http_code'] . '"}'));
+            $response['ReturnCode'] = '62'.$errCode;
         }
 
         $obj = json_decode($contents, true);
@@ -168,6 +169,8 @@ class AppSanwaForm extends Form {
                 }
             } else {
                 $kind = 'abnormalReturnCode';
+                // エラーコード設定された場合、そのままエラーコード設定
+                $uniqueCode = $response['ReturnCode'];
             }
             if ($errorNo == CURLE_OK && $kind == 'unknown') {
                 $response['Message'] = '000000';
@@ -193,13 +196,17 @@ class AppSanwaForm extends Form {
             return $response;
         }
         // uniqueCodeが設定されている場合はそれを使用し、そうでなければ通常のエラーコードを生成
-        $response = $uniqueCode ?? $this->assembleErrorCode(
-            $this->getErrorCategoryCode($errKind),
-            $this->getProcessNumber($type),
-            $this->getErrorNumber(),
-            $response,
-            $type
-        );
+        if ($uniqueCode && is_string($uniqueCode) && strlen($uniqueCode) == 6) {
+            $response['Message'] = $uniqueCode;
+        } else {
+            $response = $this->assembleErrorCode(
+                $this->getErrorCategoryCode($errKind),
+                $this->getProcessNumber($type),
+                $this->getErrorNumber(),
+                $response,
+                $type
+            );
+        }
 
         if (strlen($response['Message']) != 6) {
             Log::write("error", "Failed to generate error message: " . __METHOD__ . ": (" . str_replace(__NAMESPACE__ . '\\', '', get_class()) . ")");
