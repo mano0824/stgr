@@ -14,7 +14,7 @@ use Cake\Validation\Validator;
 class SgSanwaAPIPayReceipt extends AppSanwaForm {
     private $type = "PayReceipt";
 
-    protected function _buildSchema(Schema $schema) {
+    protected function _buildSchema(Schema $schema) {   
         return $schema
                     ->addField('MachineNo',     ['type' => 'integer'])
                     ->addField('CallNo',        ['type' => 'integer'])
@@ -284,7 +284,7 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
                                             'TrkNo'      => 0, // 軽減税率がTrkNoの固定値0以外の時は項目が出ない
                                             'DetailKbn'  => 'T',
                                             'ShohinName' => $responseItem['ShohinName'],
-                                            'Tanka'      => '',
+                                            'Tanka'      => 0,
                                             'Suryo'      => '',
                                             'Kingaku'    => (int)$response['ResultInformation']['RyoshuKingaku'] ,
                                             'Comment1'   => '',
@@ -305,7 +305,7 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
                                             'TrkNo'      => 0, // 軽減税率がTrkNoの固定値0以外の時は項目が出ない
                                             'DetailKbn'  => 'R',
                                             'ShohinName' => '領収金額',
-                                            'Tanka'      => '',
+                                            'Tanka'      => 0,
                                             'Suryo'      => '',
                                             'Kingaku'    => (int)$response['ResultInformation']['RyoshuKingaku'] ,
                                             'Comment1'   => '',
