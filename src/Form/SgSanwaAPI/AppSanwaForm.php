@@ -31,10 +31,16 @@ class AppSanwaForm extends Form {
         $apiConfig = Configure::read('API_OPERATION');
         $authonfig = Configure::read('AUTHENTICATION');
 
-        if ($apiConfig['USE_ENVIRONMENT'] == 0) {
-            $data['MachineNo'] = 80;
-            $data['HolderNo'] = [109,110,111,112];
-        }
+        // if ($apiConfig['USE_ENVIRONMENT'] == 0) {
+        //     $data['MachineNo'] = 80;
+        // $data['HolderNo'] = [104];
+        //     $data['HolderNo'] = [109,110,111,112];
+        // }
+
+        // 0524mockoonに固定値を送ってみる
+        // if ($apiconfig['USE_ENVIRONMENT:'] == 1) {
+        //     $data['HolderNo'] = [105];
+        // } 
 
         Log::write("debug", COUNT($apiConfig));
         $urlParams = [
@@ -79,6 +85,7 @@ class AppSanwaForm extends Form {
                 throw new Exception(__('{"result_code":"61'.$errCode.'",
                                         "SgSanwa_Api":"'.$type.'",
                                         "message":"受信タイムアウト"}'));
+                // response['ReturnCode'] ='61'.$errCode;
             } elseif ($errorNo == CURLE_COULDNT_RESOLVE_HOST || $errorNo == CURLE_COULDNT_CONNECT || $errorNo == CURLE_SEND_ERROR || $errorNo == CURLE_RECV_ERROR) {
                 throw new Exception(__('{"result_code":"60'.$errCode.'",
                                         "SgSanwa_Api":"'.$type.'",
