@@ -44,8 +44,8 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
 
             // mb_str_padがphpのバージョンdelayで使えないため、関数作成
             function mb_str_pad($input, $pad_length, $pad_string = '　', $pad_type = STR_PAD_RIGHT, $encoding = 'UTF-8') {
-                $input_length = mb_strlen($input, $encoding);
-                $pad_string_length = mb_strlen($pad_string, $encoding);
+                $input_length = mb_strwidth($input, $encoding);
+                $pad_string_length = mb_strwidth($pad_string, $encoding);
             
                 if ($input_length >= $pad_length) {
                     return $input;
@@ -220,21 +220,23 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
             //     }
             //     return $pointcomments;
             // }
+
             // ポイント利用コメント追加作成
+            // KioskModule-Gのconfig設定に準拠するため、プロダクト影響は検討が必要
             function addPointcomment($individual, &$responseItem){
                 $pointcomments = [];
                 $configFilePath = 'C:\KioskModule-G\Config\KioskSetting.ini';
                 if (file_exists($configFilePath)) {
-                    // iniファイルを読み込んでいるはず...
+                    // iniファイルを読み込み、ネスト分岐
                     $config = parse_ini_file($configFilePath);
-                    // UsePointの値が１であるかを確認し、条件分岐
+                    // UsePointの値が１なら、ポイントコメント表記
                     if (isset($config['UsePoint']) && $config['UsePoint'] == 1){ 
                         foreach ($individual['PointArray'] as $pointindex => $pointcomment){
-                                $pointcommentText = $pointcomment['PointName'] ?? '';
-                                if ($pointindex < 6){
-                                    $pointcomments['Comment' . ($pointindex + 1)] = mb_str_pad($pointcomment['PointName'], 12, '　',STR_PAD_RIGHT ) ." ". sprintf("%6s", $pointcomment['Point']);
+                            $pointcommentText = $pointcomment['PointName'] ?? '';
+                            if ($pointindex < 6){
+                                $pointcomments['Comment' . ($pointindex + 1)] = mb_str_pad($pointcomment['PointName'], 24, ' ',STR_PAD_RIGHT ) ." ". sprintf("%6s", $pointcomment['Point']);
                                 $pointcomments[$pointcomment['PointName'] ." ". $pointcomment['Point']] = $pointcommentText;
-                                $responseItem['Comment' . ($pointindex + 1)] = mb_str_pad($pointcomment['PointName'], 12, '　',STR_PAD_RIGHT ) ." ". sprintf("%6s", $pointcomment['Point']);        
+                                $responseItem['Comment' . ($pointindex + 1)] = mb_str_pad($pointcomment['PointName'], 24, ' ',STR_PAD_RIGHT ) ." ". sprintf("%6s", $pointcomment['Point']);       
                             }
                         }
                         return $pointcomments;
@@ -244,11 +246,22 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
             // 販促コメント作成
             function addComments($individual, &$responseItem) {
                 $comments = [];
+                $configFilePath = 'C:\KioskModule-G\Config\KioskSetting.ini';
                 foreach ($individual['Comment'] as $index => $comment) {
                     $commentText = $comment[0] ?? '';
-                    $comments["Comment" . ($index + 6)] = $comment;
-                    $responseItem['Comment' . ($index + 6)] = $comment;
+                    if (file_exists($configFilePath)) {
+                        // iniファイルを読み込み、ネスト分岐
+                        $config = parse_ini_file($configFilePath);
+                        // UsePointの値が１なら、ポイントコメント表記
+                        if (isset($config['UsePoint']) && $config['UsePoint'] == 1){ 
+                            $comments["Comment" . ($index + 6)] = $comment;
+                            $responseItem['Comment' . ($index + 6)] = $comment;
+                        }else {
+                            $comments["Comment" .($index + 1)] = $comment;
+                            $responseItem['Comment' . ($index + 1)] = $comment;
+                        }     
                     }
+                }
                 return $comments;
 		    }
 
@@ -378,11 +391,11 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
                                             'Tanka'      => 0,
                                             'Suryo'      => '',
                                             'Kingaku'    => (int)$response['ResultInformation']['RyoshuKingaku'] ,
-                                            'Comment1'   => '',
-                                            'Comment2'   => '',
-                                            'Comment3'   => '',
-                                            'Comment4'   => '',
-                                            'Comment5'   => '',
+                                            'Comment1'   => ($pointcomment[0]['PointName'] != '') ? (string)str_pad($pointcomment['PointName'],12) . ' ' . (string)$pointcomment['Point'] : '',
+                                            'Comment2'   => ($pointcomment[0]['PointName'] != '') ? (string)str_pad($pointcomment['PointName'],12) . ' ' . (string)$pointcomment['Point'] : '',
+                                            'Comment3'   => ($pointcomment[0]['PointName'] != '') ? (string)str_pad($pointcomment['PointName'],12) . ' ' . (string)$pointcomment['Point'] : '',
+                                            'Comment4'   => ($pointcomment[0]['PointName'] != '') ? (string)str_pad($pointcomment['PointName'],12) . ' ' . (string)$pointcomment['Point'] : '',
+                                            'Comment5'   => ($pointcomment[0]['PointName'] != '') ? (string)str_pad($pointcomment['PointName'],12) . ' ' . (string)$pointcomment['Point'] : '',
                                             'Comment6'   => '',
                                             'Comment7'   => '',
                                             'Comment8'   => '',
@@ -399,11 +412,11 @@ class SgSanwaAPIPayReceipt extends AppSanwaForm {
                                             'Tanka'      => 0,
                                             'Suryo'      => '',
                                             'Kingaku'    => (int)$response['ResultInformation']['RyoshuKingaku'] ,
-                                            'Comment1'   => '',
-                                            'Comment2'   => '',
-                                            'Comment3'   => '',
-                                            'Comment4'   => '',
-                                            'Comment5'   => '',
+                                            'Comment1'   => ($pointcomment[0]['PointName'] != '') ? (string)str_pad($pointcomment['PointName'],12) . ' ' . (string)$pointcomment['Point'] : '',
+                                            'Comment2'   => ($pointcomment[0]['PointName'] != '') ? (string)str_pad($pointcomment['PointName'],12) . ' ' . (string)$pointcomment['Point'] : '',
+                                            'Comment3'   => ($pointcomment[0]['PointName'] != '') ? (string)str_pad($pointcomment['PointName'],12) . ' ' . (string)$pointcomment['Point'] : '',
+                                            'Comment4'   => ($pointcomment[0]['PointName'] != '') ? (string)str_pad($pointcomment['PointName'],12) . ' ' . (string)$pointcomment['Point'] : '',
+                                            'Comment5'   => ($pointcomment[0]['PointName'] != '') ? (string)str_pad($pointcomment['PointName'],12) . ' ' . (string)$pointcomment['Point'] : '',
                                             'Comment6'   => '',
                                             'Comment7'   => '',
                                             'Comment8'   => '',
